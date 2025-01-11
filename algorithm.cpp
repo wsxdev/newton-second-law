@@ -3,12 +3,13 @@ using namespace std;
 
 // FUNCIÓN PARA MOSTRAR EL MENÚ PRINCIPAL
 void mostrarMenu() {
+    //system("clear");
     cout << "RESOLUCIÓN DE PROBLEMAS: SEGUNDA LEY DE NEWTON\n";
     cout << "1. Calcular fuerza\n";
     cout << "2. Calcular aceleración\n";
     cout << "3. Calcular masa\n";
     cout << "4. Salir\n";
-    cout << "Seleccione una opción: ";
+    cout << "\nSeleccione una opción: ";
 }
 
 // FUNCIÓN PARA CALCULAR LA FUERZA
@@ -38,7 +39,7 @@ int main() {
             case 1:
                 cout << "Ingrese la masa (kg): ";
                 cin >> masa;
-                cout << "Ingrese la aceleración (m/s^2): ";
+                cout << "Ingrese la aceleración (m/s²): ";
                 cin >> aceleracion;
                 cout << "La fuerza es: " << calcularFuerza(masa, aceleracion) << " N\n";
                 break;
@@ -50,13 +51,13 @@ int main() {
                 if (masa == 0) {
                     cout << "Error: La masa no puede ser cero.\n";
                 } else {
-                    cout << "La aceleración es: " << calcularAceleracion(fuerza, masa) << " m/s^2\n";
+                    cout << "La aceleración es: " << calcularAceleracion(fuerza, masa) << " m/s²\n";
                 }
                 break;
             case 3:
                 cout << "Ingrese la fuerza (N): ";
                 cin >> fuerza;
-                cout << "Ingrese la aceleración (m/s^2): ";
+                cout << "Ingrese la aceleración (m/s²): ";
                 cin >> aceleracion;
                 if (aceleracion == 0) {
                     cout << "Error: La aceleración no puede ser cero.\n";
@@ -68,7 +69,8 @@ int main() {
                 cout << "Saliendo del programa. ¡Gracias!\n";
                 break;
             default:
-                cout << "Opción no válida. Intente de nuevo.\n";
+                system("clear");
+                cout << "Opción no válida. Intente de nuevo.\n\n";
         }
     } while (opcion != 4);
 

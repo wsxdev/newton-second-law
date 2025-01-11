@@ -54,6 +54,8 @@ int main() {
                     cout << "La aceleración es: " << calcularAceleracion(fuerza, masa) << " m/s²\n";
                 }
                 break;
+
+            // CALCULO DE LA MASA - MAEL-MC
             case 3:
                 cout << "Ingrese la fuerza (N): ";
                 cin >> fuerza;

@@ -64,7 +64,7 @@ int main() {
                 if (aceleracion == 0) {
                     cout << "Error: La aceleracion no puede ser cero. Intentelo de nuevo\n";
                 } else {
-                    cout << "La masa es: " << calcularMasa(fuerza, aceleracion) << " kg\n";
+                    cout << "La masa es de: " << calcularMasa(fuerza, aceleracion) << " kg\n";
                 }
                 break;
             case 4:

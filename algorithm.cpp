@@ -59,7 +59,7 @@ int main() {
             case 3:
                 cout << "Ingrese la fuerza en (Newton): ";
                 cin >> fuerza;
-                cout << "Ingrese la aceleracion en (m/s²): ";
+                cout << "Ingrese la aceleracion en (m/s2): ";
                 cin >> aceleracion;
                 if (aceleracion == 0) {
                     cout << "Error: La aceleracion no puede ser cero. Intentelo de nuevo\n";

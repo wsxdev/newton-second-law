@@ -59,7 +59,7 @@ int main() {
             case 3:
                 cout << "Ingrese la fuerza (N): ";
                 cin >> fuerza;
-                cout << "Ingrese la aceleracion (m/s^2): ";
+                cout << "Ingrese la aceleracion (m/s²): ";
                 cin >> aceleracion;
                 if (aceleracion == 0) {
                     cout << "Error: La aceleracion no puede ser cero.\n";
@@ -72,7 +72,7 @@ int main() {
                 break;
             default:
                 system("clear");
-                cout << "Opción no válida. Intente de nuevo.\n\n";
+                cout << "Opción no valida. Intente de nuevo.\n";
         }
     } while (opcion != 4);
 

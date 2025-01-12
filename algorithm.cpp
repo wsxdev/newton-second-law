@@ -57,12 +57,12 @@ int main() {
 
             // CALCULO DE LA MASA - MAEL-MC
             case 3:
-                cout << "Ingrese la fuerza (N): ";
+                cout << "Ingrese la fuerza en (Newton): ";
                 cin >> fuerza;
-                cout << "Ingrese la aceleracion (m/s²): ";
+                cout << "Ingrese la aceleracion en (m/s²): ";
                 cin >> aceleracion;
                 if (aceleracion == 0) {
-                    cout << "Error: La aceleracion no puede ser cero.\n";
+                    cout << "Error: La aceleracion no puede ser cero. Intentelo de nuevo\n";
                 } else {
                     cout << "La masa es: " << calcularMasa(fuerza, aceleracion) << " kg\n";
                 }

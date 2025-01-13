@@ -52,7 +52,6 @@ int main() {
                     cout << "Error: La masa no puede ser cero.\n";
                 } else {
                     cout << "La aceleración es: " << calcularAceleracion(fuerza, masa) << " m/s²\n";
-                    cout << "wndfiongf\n";
                 }
                 break;
             case 3:

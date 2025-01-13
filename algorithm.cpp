@@ -42,7 +42,7 @@ int main() {
                 cout << "Ingrese la aceleración (m/s²): ";
                 cin >> aceleracion;
                 cout << "La fuerza es: " << calcularFuerza(masa, aceleracion) << " N\n";
-                cout << "nfdjkfndjf\n";
+                cout << "nfdjkfndjfdssdsdsdd\n";
                 break;
             case 2:
                 cout << "Ingrese la fuerza (N): ";

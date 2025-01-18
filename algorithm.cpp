@@ -72,7 +72,7 @@ int main() {
                 break;
             default:
                 system("clear");
-                cout << "Opción no valida. Intente de nuevo.\n";
+                cout << "Opción no valida. Intentelo de nuevo.\n";
         }
     } while (opcion != 4);
 

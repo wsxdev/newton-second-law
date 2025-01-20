@@ -1,183 +1,171 @@
 #include <iostream>
-#include <limits>
-#include <cmath> // Para funciones matemáticas como sin() y cos()
+#include <cmath>
+
 using namespace std;
 
-// FUNCIÓN PARA LIMPIAR PANTALLA
-void limpiarPantalla() {
-#ifdef _WIN32
-    system("cls");
-#else
-    system("clear");
-#endif
-}
-
-// FUNCIÓN PARA MOSTRAR EL MENÚ PRINCIPAL
-void mostrarMenu() {
-    limpiarPantalla();
-    cout << "=========================================\n";
-    cout << " RESOLUCIÓN DE PROBLEMAS: SEGUNDA LEY DE NEWTON\n";
-    cout << "=========================================\n";
-    cout << "1. Calcular fuerza (F = m * a)\n";
-    cout << "2. Calcular aceleración (a = F / m)\n";
-    cout << "3. Calcular masa (m = F / a)\n";
-    cout << "4. Cálculos en un plano inclinado\n";
-    cout << "5. Conversión de unidades\n";
-    cout << "6. Salir\n";
-    cout << "=========================================\n";
-    cout << "Seleccione una opción: ";
-}
-
-// FUNCIÓN PARA VALIDAR ENTRADA DE NÚMEROS
-double leerNumeroPositivo(const string& mensaje) {
+// Validar que el número ingresado sea positivo
+double leerNumeroPositivo(string mensaje) {
     double numero;
-    while (true) {
+    do {
         cout << mensaje;
         cin >> numero;
-        if (cin.fail() || numero <= 0) {
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            cout << "Entrada no válida. Por favor, ingrese un número mayor a 0.\n";
-        } else {
-            return numero;
+        if (numero <= 0) {
+            cout << "El valor debe ser mayor a 0. Intente nuevamente.\n";
         }
-    }
+    } while (numero <= 0);
+    return numero;
 }
 
-// FUNCIONES PARA TRABAJAR CON GRADOS
-double convertirGradosARadianes(double grados) {
-    return grados * M_PI / 180;
-}
-
-double senoEnGrados(double grados) {
-    return sin(convertirGradosARadianes(grados));
-}
-
-double cosenoEnGrados(double grados) {
-    return cos(convertirGradosARadianes(grados));
-}
-
-// FUNCIONES DE CÁLCULO
-double calcularFuerza(double masa, double aceleracion) {
-    return masa * aceleracion;
-}
-
-double calcularAceleracion(double fuerza, double masa) {
-    return fuerza / masa;
-}
-
-double calcularMasa(double fuerza, double aceleracion) {
-    return fuerza / aceleracion;
-}
-
-// CÁLCULOS EN UN PLANO INCLINADO
-void calculosPlanoInclinado() {
-    limpiarPantalla();
-    cout << "CÁLCULOS EN UN PLANO INCLINADO\n";
-    cout << "=========================================\n";
-
-    // Leer datos iniciales
-    double masa = leerNumeroPositivo("Ingrese la masa del objeto (kg): ");
-    double angulo = leerNumeroPositivo("Ingrese el ángulo del plano inclinado (grados): ");
-    double fuerzaAplicada = leerNumeroPositivo("Ingrese la fuerza aplicada (N): ");
-
-    // Cálculos principales
-    double peso = masa * 9.81; // Peso del objeto
-    double pesoX = peso * senoEnGrados(angulo); // Componente del peso en x
-    double pesoY = peso * cosenoEnGrados(angulo); // Componente del peso en y
-    double fuerzaResultante = fuerzaAplicada - pesoX; // Considerando fuerza aplicada
-
-    cout << "\nResultados:\n";
-    cout << "Peso del objeto: " << peso << " N\n";
-    cout << "Componente del peso en el eje x: " << pesoX << " N\n";
-    cout << "Componente del peso en el eje y: " << pesoY << " N\n";
-    cout << "Fuerza resultante: " << fuerzaResultante << " N\n";
-
-    // Posibilidad de calcular aceleración o masa
-    char opcionExtra;
-    cout << "\n¿Desea realizar cálculos adicionales (a = F / m o m = F / a)? (s/n): ";
-    cin >> opcionExtra;
-
-    if (opcionExtra == 's' || opcionExtra == 'S') {
-        char tipoCalculo;
-        cout << "¿Qué desea calcular? (a: aceleración, m: masa): ";
-        cin >> tipoCalculo;
-
-        if (tipoCalculo == 'a' || tipoCalculo == 'A') {
-            double aceleracion = fuerzaResultante / masa;
-            cout << "La aceleración del objeto es: " << aceleracion << " m/s²\n";
-        } else if (tipoCalculo == 'm' || tipoCalculo == 'M') {
-            double nuevaFuerza = leerNumeroPositivo("Ingrese la nueva fuerza (N): ");
-            double nuevaAceleracion = leerNumeroPositivo("Ingrese la nueva aceleración (m/s²): ");
-            cout << "La masa del objeto es: " << calcularMasa(nuevaFuerza, nuevaAceleracion) << " kg\n";
-        } else {
-            cout << "Opción no válida.\n";
-        }
-    }
-
-    cout << "Presione Enter para regresar al menú principal...";
-    cin.ignore();
-    cin.get();
-}
-
-// FUNCIÓN PRINCIPAL
-int main() {
-    int opcion;
-
+// Validar que el número sea no negativo
+double leerNumeroNoNegativo(string mensaje) {
+    double numero;
     do {
-        mostrarMenu();
+        cout << mensaje;
+        cin >> numero;
+        if (numero < 0) {
+            cout << "El valor no puede ser negativo. Intente nuevamente.\n";
+        }
+    } while (numero < 0);
+    return numero;
+}
+
+// Menú de cálculos en plano horizontal
+void planoHorizontal() {
+    char estado;
+    cout << "\n¿El cuerpo está en reposo (R) o en movimiento (M)? ";
+    cin >> estado;
+    estado = toupper(estado);
+
+    if (estado != 'R' && estado != 'M') {
+        cout << "Estado inválido. Debe ser 'R' o 'M'.\n";
+        return;
+    }
+
+    cout << "\n¿Qué desea calcular?\n";
+    cout << "1. Masa\n2. Fuerza neta\n3. Peso\n4. Aceleración\n";
+    cout << "5. Fuerza de fricción\n6. Fuerza normal\n7. Coeficiente de fricción\nOpción: ";
+    int opcion;
+    cin >> opcion;
+
+    double masa, fuerza, peso, aceleracion, fuerzaFriccion, fuerzaNormal, coefFriccion;
+
+    switch (opcion) {
+        case 1: // Calcular masa
+            fuerza = leerNumeroPositivo("Ingrese la fuerza neta aplicada (N): ");
+            aceleracion = leerNumeroPositivo("Ingrese la aceleración (m/s²): ");
+            masa = fuerza / aceleracion;
+            cout << "\nDatos ingresados:\n";
+            cout << "Fuerza: " << fuerza << " N\nAceleración: " << aceleracion << " m/s²\n";
+            cout << "Resultado:\nMasa: " << masa << " kg\n";
+            break;
+        case 2: // Calcular fuerza neta
+            masa = leerNumeroPositivo("Ingrese la masa del cuerpo (kg): ");
+            aceleracion = leerNumeroPositivo("Ingrese la aceleración (m/s²): ");
+            fuerza = masa * aceleracion;
+            cout << "\nDatos ingresados:\n";
+            cout << "Masa: " << masa << " kg\nAceleración: " << aceleracion << " m/s²\n";
+            cout << "Resultado:\nFuerza neta: " << fuerza << " N\n";
+            break;
+        case 3: // Calcular peso
+            masa = leerNumeroPositivo("Ingrese la masa del cuerpo (kg): ");
+            peso = masa * 9.8; // Gravedad = 9.8 m/s²
+            cout << "\nDatos ingresados:\n";
+            cout << "Masa: " << masa << " kg\n";
+            cout << "Resultado:\nPeso: " << peso << " N\n";
+            break;
+        case 4: // Calcular aceleración
+            fuerza = leerNumeroPositivo("Ingrese la fuerza neta aplicada (N): ");
+            masa = leerNumeroPositivo("Ingrese la masa del cuerpo (kg): ");
+            aceleracion = fuerza / masa;
+            cout << "\nDatos ingresados:\n";
+            cout << "Fuerza: " << fuerza << " N\nMasa: " << masa << " kg\n";
+            cout << "Resultado:\nAceleración: " << aceleracion << " m/s²\n";
+            break;
+        case 5: // Calcular fuerza de fricción
+            coefFriccion = leerNumeroPositivo("Ingrese el coeficiente de fricción: ");
+            fuerzaNormal = leerNumeroPositivo("Ingrese la fuerza normal (N): ");
+            fuerzaFriccion = coefFriccion * fuerzaNormal;
+            cout << "\nDatos ingresados:\n";
+            cout << "Coeficiente de fricción: " << coefFriccion << "\nFuerza normal: " << fuerzaNormal << " N\n";
+            cout << "Resultado:\nFuerza de fricción: " << fuerzaFriccion << " N\n";
+            break;
+        case 6: // Calcular fuerza normal
+            masa = leerNumeroPositivo("Ingrese la masa del cuerpo (kg): ");
+            fuerzaNormal = masa * 9.8; // En plano horizontal, normal = peso
+            cout << "\nDatos ingresados:\n";
+            cout << "Masa: " << masa << " kg\n";
+            cout << "Resultado:\nFuerza normal: " << fuerzaNormal << " N\n";
+            break;
+        case 7: // Calcular coeficiente de fricción
+            fuerzaFriccion = leerNumeroPositivo("Ingrese la fuerza de fricción (N): ");
+            fuerzaNormal = leerNumeroPositivo("Ingrese la fuerza normal (N): ");
+            coefFriccion = fuerzaFriccion / fuerzaNormal;
+            cout << "\nDatos ingresados:\n";
+            cout << "Fuerza de fricción: " << fuerzaFriccion << " N\nFuerza normal: " << fuerzaNormal << " N\n";
+            cout << "Resultado:\nCoeficiente de fricción: " << coefFriccion << "\n";
+            break;
+        default:
+            cout << "Opción no válida.\n";
+    }
+}
+
+// Menú de cálculos en plano inclinado
+void planoInclinado() {
+    cout << "\n¿Qué desea calcular?\n";
+    cout << "1. Fuerza para mantener en equilibrio\n2. Aceleración\n3. Peso\n";
+    cout << "4. Peso en X\n5. Peso en Y\n6. Fuerza normal\n";
+    cout << "7. Fuerza de rozamiento\n8. Coeficiente de fricción\nOpción: ";
+    int opcion;
+    cin >> opcion;
+
+    double masa, peso, angulo, fuerzaNormal, fuerzaFriccion, coefFriccion, aceleracion, fuerzaEquilibrio;
+
+    switch (opcion) {
+        case 1: // Calcular fuerza para mantener en equilibrio
+            masa = leerNumeroPositivo("Ingrese la masa del cuerpo (kg): ");
+            angulo = leerNumeroPositivo("Ingrese el ángulo de inclinación (°): ");
+            angulo = angulo * M_PI / 180.0; // Convertir a radianes
+            fuerzaEquilibrio = masa * 9.8 * sin(angulo);
+            cout << "\nDatos ingresados:\n";
+            cout << "Masa: " << masa << " kg\nÁngulo: " << angulo * 180.0 / M_PI << " °\n";
+            cout << "Resultado:\nFuerza para mantener en equilibrio: " << fuerzaEquilibrio << " N\n";
+            break;
+        case 2: // Calcular aceleración
+            masa = leerNumeroPositivo("Ingrese la masa del cuerpo (kg): ");
+            angulo = leerNumeroPositivo("Ingrese el ángulo de inclinación (°): ");
+            coefFriccion = leerNumeroNoNegativo("Ingrese el coeficiente de fricción: ");
+            angulo = angulo * M_PI / 180.0; // Convertir a radianes
+            aceleracion = 9.8 * (sin(angulo) - coefFriccion * cos(angulo));
+            if (aceleracion < 0) aceleracion = 0; // No hay movimiento si fricción > componente x
+            cout << "\nDatos ingresados:\n";
+            cout << "Masa: " << masa << " kg\nÁngulo: " << angulo * 180.0 / M_PI << " °\nCoeficiente de fricción: " << coefFriccion << "\n";
+            cout << "Resultado:\nAceleración: " << aceleracion << " m/s²\n";
+            break;
+        // Otros cálculos del plano inclinado se añadirían aquí siguiendo esta estructura
+        default:
+            cout << "Opción no válida.\n";
+    }
+}
+
+// Menú principal
+void menuPrincipal() {
+    int opcion;
+    do {
+        cout << "\nMenú principal:\n";
+        cout << "1. Cálculos en plano horizontal\n2. Cálculos en plano inclinado\n3. Salir\nOpción: ";
         cin >> opcion;
 
-        if (cin.fail()) {
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            cout << "Opción no válida. Intente nuevamente.\n";
-            continue;
-        }
-
         switch (opcion) {
-            case 1: {
-                limpiarPantalla();
-                double masa = leerNumeroPositivo("Ingrese la masa (kg): ");
-                double aceleracion = leerNumeroPositivo("Ingrese la aceleración (m/s²): ");
-                cout << "La fuerza es: " << calcularFuerza(masa, aceleracion) << " N\n";
-                break;
-            }
-            case 2: {
-                limpiarPantalla();
-                double fuerza = leerNumeroPositivo("Ingrese la fuerza (N): ");
-                double masa = leerNumeroPositivo("Ingrese la masa (kg): ");
-                cout << "La aceleración es: " << calcularAceleracion(fuerza, masa) << " m/s²\n";
-                break;
-            }
-            case 3: {
-                limpiarPantalla();
-                double fuerza = leerNumeroPositivo("Ingrese la fuerza (N): ");
-                double aceleracion = leerNumeroPositivo("Ingrese la aceleración (m/s²): ");
-                cout << "La masa es: " << calcularMasa(fuerza, aceleracion) << " kg\n";
-                break;
-            }
-            case 4:
-                calculosPlanoInclinado();
-                break;
-
-            case 5:
-                cout << "Funcionalidad en desarrollo.\n";
-                break;
-
-            case 6:
-                cout << "Saliendo del programa. ¡Gracias por usarlo!\n";
-                break;
-
-            default:
-                cout << "Opción no válida. Intente nuevamente.\n";
+            case 1: planoHorizontal(); break;
+            case 2: planoInclinado(); break;
+            case 3: cout << "Saliendo del programa.\n"; break;
+            default: cout << "Opción no válida.\n";
         }
+    } while (opcion != 3);
+}
 
-        cout << "Presione Enter para continuar...";
-        cin.ignore();
-        cin.get();
-
-    } while (opcion != 6);
-
+// Función principal
+int main() {
+    menuPrincipal();
     return 0;
 }

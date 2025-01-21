@@ -138,13 +138,23 @@ void planoHorizontal() {
 // Problemas en plano inclinado
 void planoInclinado() {
     int calcular;
-    double angulo, masa, peso, normal, fuerza_equilibrio, friccion, coef_friccion, gravedad = 9.81;
+    double angulo, masa, peso, pesoX, pesoY, normal, fuerza_equilibrio, friccion, coef_friccion, aceleracion, gravedad = 9.81;
+    string direccion;
 
     cout << "\nPLANO INCLINADO\n";
-    cout << "Puede calcular:\n";
-    cout << "1. Fuerza para mantener el equilibrio\n";
-    cout << "2. Peso en X\n";
-    cout << "3. Peso en Y\n";
+    cout << "Ingrese la direccion del movimiento (izquierda/derecha): ";
+    cin >> direccion;
+
+    cout << "\nPuede calcular:\n";
+    cout << "1. Fuerza para mantener en equilibrio\n";
+    cout << "2. Aceleracion\n";
+    cout << "3. Masa\n";
+    cout << "4. Peso\n";
+    cout << "5. Peso en X\n";
+    cout << "6. Peso en Y\n";
+    cout << "7. Fuerza normal\n";
+    cout << "8. Fuerza de rozamiento\n";
+    cout << "9. Coeficiente de friccion\n";
     cout << "Seleccione lo que desea calcular: ";
     cin >> calcular;
 
@@ -159,24 +169,67 @@ void planoInclinado() {
             cout << "La fuerza para mantener el equilibrio es: " << fuerza_equilibrio << " N\n";
             break;
         case 2:
-            cout << "Ingrese el peso (N): ";
-            cin >> peso;
-            cout << "Ingrese el angulo de inclinacion (grados): ";
-            cin >> angulo;
-            angulo = angulo * M_PI / 180;  // Convertir a radianes
-            double pesoX;
-            pesoX = peso * sin(angulo);
-            cout << "El peso en X es: " << pesoX << " N\n";
+            cout << "Ingrese la fuerza neta (N): ";
+            cin >> fuerza_equilibrio;
+            cout << "Ingrese la masa (kg): ";
+            cin >> masa;
+            aceleracion = fuerza_equilibrio / masa;
+            cout << "La aceleracion es: " << aceleracion << " m/s^2\n";
             break;
         case 3:
             cout << "Ingrese el peso (N): ";
             cin >> peso;
+            masa = peso / gravedad;
+            cout << "La masa es: " << masa << " kg\n";
+            break;
+        case 4:
+            cout << "Ingrese la masa (kg): ";
+            cin >> masa;
+            peso = masa * gravedad;
+            cout << "El peso es: " << peso << " N\n";
+            break;
+        case 5:
+            cout << "Ingrese el peso (N): ";
+            cin >> peso;
             cout << "Ingrese el angulo de inclinacion (grados): ";
             cin >> angulo;
             angulo = angulo * M_PI / 180;  // Convertir a radianes
-            double pesoY;
+            pesoX = peso * sin(angulo);
+            cout << "El peso en X es: " << pesoX << " N\n";
+            break;
+        case 6:
+            cout << "Ingrese el peso (N): ";
+            cin >> peso;
+            cout << "Ingrese el angulo de inclinacion (grados): ";
+            cin >> angulo;
+            angulo = angulo * M_PI / 180;  // Convertir a radianes
             pesoY = peso * cos(angulo);
             cout << "El peso en Y es: " << pesoY << " N\n";
+            break;
+        case 7:
+            cout << "Ingrese el peso (N): ";
+            cin >> peso;
+            cout << "Ingrese el angulo de inclinacion (grados): ";
+            cin >> angulo;
+            angulo = angulo * M_PI / 180;  // Convertir a radianes
+            normal = peso * cos(angulo);
+            cout << "La fuerza normal es: " << normal << " N\n";
+            break;
+        case 8:
+            cout << "Ingrese el coeficiente de friccion: ";
+            cin >> coef_friccion;
+            cout << "Ingrese la normal (N): ";
+            cin >> normal;
+            friccion = coef_friccion * normal;
+            cout << "La fuerza de rozamiento es: " << friccion << " N\n";
+            break;
+        case 9:
+            cout << "Ingrese la fuerza de rozamiento (N): ";
+            cin >> friccion;
+            cout << "Ingrese la normal (N): ";
+            cin >> normal;
+            coef_friccion = friccion / normal;
+            cout << "El coeficiente de friccion es: " << coef_friccion << "\n";
             break;
         default:
             cout << "Opcion invalida.\n";
@@ -187,7 +240,7 @@ void planoInclinado() {
 void menuConvertidor() {
     int opcion;
     do {
-        cout << "\nCONVERTIDOR DE UNIDADES\n";
+        cout << "\n========== CONVERTIDOR DE UNIDADES ==========\n";
         cout << "1. Conversion de fuerza\n";
         cout << "2. Conversion de aceleracion\n";
         cout << "3. Conversion de masa\n";
@@ -213,47 +266,23 @@ void menuConvertidor() {
                 cout << "Volviendo al menu principal...\n";
                 break;
             default:
-                cout << "Opcion invalida.\n";
+                cout << "Opcion invalida, intente de nuevo.\n";
         }
     } while (opcion != 5);
 }
 
-// Conversion de fuerza
 void conversionFuerza() {
-    double newtons, dinas;
-    cout << "\nCONVERSION DE FUERZA\n";
-    cout << "Ingrese la fuerza en Newtons: ";
-    cin >> newtons;
-    dinas = newtons * 1e5;
-    cout << newtons << " N son " << dinas << " dinas\n";
+    cout << "Proximamente conversiones de fuerza...\n";
 }
 
-// Conversion de aceleracion
 void conversionAceleracion() {
-    double ms2, gal;
-    cout << "\nCONVERSION DE ACELERACION\n";
-    cout << "Ingrese la aceleracion en m/s^2: ";
-    cin >> ms2;
-    gal = ms2 * 100;
-    cout << ms2 << " m/s^2 son " << gal << " Gal\n";
+    cout << "Proximamente conversiones de aceleracion...\n";
 }
 
-// Conversion de masa
 void conversionMasa() {
-    double gramos, kilogramos;
-    cout << "\nCONVERSION DE MASA\n";
-    cout << "Ingrese la masa en gramos: ";
-    cin >> gramos;
-    kilogramos = gramos / 1000;
-    cout << gramos << " g son " << kilogramos << " kg\n";
+    cout << "Proximamente conversiones de masa...\n";
 }
 
-// Conversion de angulos
 void conversionAngulos() {
-    double grados, radianes;
-    cout << "\nCONVERSION DE ANGULOS\n";
-    cout << "Ingrese el angulo en grados: ";
-    cin >> grados;
-    radianes = grados * M_PI / 180;
-    cout << grados << " grados son " << radianes << " radianes\n";
+    cout << "Proximamente conversiones de angulos...\n";
 }

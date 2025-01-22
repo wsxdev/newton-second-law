@@ -84,8 +84,9 @@ void planoHorizontal() {
     } 
     // CUERPO EN MOVIMIENTO
     else if (Estado == 2) {
-        cout << "\nEn movimiento, puede calcular:\n";
-        cout << "1. Fuerza Neta\n";
+        cout << "\nPLANO HORIZONTAL: CUERPO EN MOVIMIENTO\n";
+        cout << "\nPuede calcular:\n";
+        cout << "1. Fuerza\n";
         cout << "2. Fuerza Normal\n";
         cout << "3. Masa\n";
         cout << "4. Aceleracion\n";

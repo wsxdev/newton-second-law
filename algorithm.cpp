@@ -12,7 +12,7 @@ void conversionAceleracion();
 void conversionMasa();
 void conversionAngulos(); */
 
-// PROBLEMAS EN PLANO HORIZONTAL
+// PROBLEMAS EN PLANO HORIZONTALL
 void planoHorizontal() {
     system("cls");      
     int Estado, Calcular;

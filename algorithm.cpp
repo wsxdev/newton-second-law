@@ -12,7 +12,7 @@ void conversionAceleracion();
 void conversionMasa();
 void conversionAngulos();
 
-// FUNCIÓN PRINCIPAL
+// FUNCIÓN PRINCIPALL
 int main() {
     system("cls");
     menuPrincipal();

@@ -3,70 +3,34 @@
 using namespace std;
 
 // Prototipos
-void menuPrincipal();
+/* void menuPrincipal();
 void planoHorizontal();
 void planoInclinado();
 void menuConvertidor();
 void conversionFuerza();
 void conversionAceleracion();
 void conversionMasa();
-void conversionAngulos();
+void conversionAngulos(); */
 
-// FUNCIÓN PRINCIPALL
-int main() {
-    system("cls");
-    menuPrincipal();
-    return 0;
-}
-
-// Menú principal
-void menuPrincipal() {
-    int opcion;
-    do {
-        cout << "\nSEGUNDA LEY DE NEWTON: LEY FUNDAMENTAL DE LA DINAMICA\n";
-        cout << "\n================== MENU PRINCIPAL ===================\n";
-        cout << "1. Plano horizontal\n";
-        cout << "2. Plano inclinado\n";
-        cout << "3. Convertidor de unidades\n";
-        cout << "4. Salir\n";
-        cout << "\nIngrese una opcion: ";
-        cin >> opcion;
-
-        switch (opcion) {
-            case 1:
-                planoHorizontal();
-                break;
-            case 2:
-                planoInclinado();
-                break;
-            case 3:
-                menuConvertidor();
-                break;
-            case 4:
-                cout << "Saliendo del programa...\n";
-                break;
-            default:
-                cout << "Opcion invalida, intente de nuevo.\n";
-        }
-    } while (opcion != 4);
-}
-
-// Problemas en plano horizontal
+// PROBLEMAS EN PLANO HORIZONTAL
 void planoHorizontal() {
     system("cls");      
     int Estado, Calcular;
     double masa, fuerza, peso, aceleracion, friccion, normal, coef_friccion, gravedad = 9.81;
     string direccion;
 
-    //Plano horizontal verificado (variables a calcular)
+    // MENÚ PLANO HORIZONTAL
     cout << "\n====== PLANO HORIZONTAL ======\n";
     cout << "1. En reposo\n";
     cout << "2. En movimiento\n";
     cout << "Seleccione el estado del cuerpo: ";
     cin >> Estado;
 
+    // CUERPO EN REPOSO
     if (Estado == 1) {
-        cout << "\nEn reposo, puede calcular:\n";
+        system("cls");
+        cout << "\nPLANO HORIZONTAL: CUERPO EN REPOSO\n";
+        cout << "\nPuede calcular:\n";
         cout << "1. Peso\n";
         cout << "2. Masa\n";
         cout << "3. Fuerza normal\n";
@@ -74,28 +38,52 @@ void planoHorizontal() {
         cin >> Calcular;
 
         switch (Calcular) {
+            // CÁLCULO DEL PESO
             case 1:
+                system("cls");
+                cout << "CALCULANDO EL PESO\n\n";
                 cout << "Ingrese la masa (kg): ";
                 cin >> masa;
                 peso = masa * gravedad;
+
+                cout << "\nDatos ingresados:\n";
+                cout << "Masa: " << masa << " kg\n";
+                cout << "\nRESULTADO\n";
                 cout << "El peso es: " << peso << " N\n";
                 break;
+            // CÁLCULO DE LA MASA
             case 2:
+                system("cls");
+                cout << "CALCULANDO LA MASA\n\n";
                 cout << "Ingrese el peso (N): ";
                 cin >> peso;
                 masa = peso / gravedad;
+
+                cout << "\nDatos ingresados:\n";
+                cout << "Peso: " << peso << " N\n";
+                cout << "\nRESULTADO\n";
                 cout << "La masa es: " << masa << " kg\n";
                 break;
+            // CÁLCULO DE LA FUERZA NORMAL
             case 3:
+                system("cls");
+                cout << "CALCULANDO LA FUERZA NORMAL\n\n";
                 cout << "Ingrese la masa (kg): ";
                 cin >> masa;
                 normal = masa * gravedad;
+
+                cout << "\nDatos ingresados:\n";
+                cout << "Masa: " << masa << " kg\n";
+                cout << "\nRESULTADO\n";
                 cout << "La fuerza normal es: " << normal << " N\n";
                 break;
             default:
                 cout << "Opcion invalida.\n";
         }
-    } else if (Estado == 2) {
+
+    } 
+    // CUERPO EN MOVIMIENTO
+    else if (Estado == 2) {
         cout << "\nEn movimiento, puede calcular:\n";
         cout << "1. Fuerza Neta\n";
         cout << "2. Fuerza Normal\n";
@@ -245,6 +233,23 @@ void planoInclinado() {
     }
 }
 
+
+void conversionFuerza() {
+    cout << "Proximamente conversiones de fuerza...\n";
+}
+
+void conversionAceleracion() {
+    cout << "Proximamente conversiones de aceleracion...\n";
+}
+
+void conversionMasa() {
+    cout << "Proximamente conversiones de masa...\n";
+}
+
+void conversionAngulos() {
+    cout << "Proximamente conversiones de angulos...\n";
+}
+
 // Convertidor de unidades
 void menuConvertidor() {
     int opcion;
@@ -281,18 +286,42 @@ void menuConvertidor() {
     } while (opcion != 5);
 }
 
-void conversionFuerza() {
-    cout << "Proximamente conversiones de fuerza...\n";
+// MENÚ PRINCIPAL
+void menuPrincipal() {
+    int opcion;
+    do {
+        cout << "\nSEGUNDA LEY DE NEWTON: LEY FUNDAMENTAL DE LA DINAMICA\n";
+        cout << "\n================== MENU PRINCIPAL ===================\n";
+        cout << "1. Plano horizontal\n";
+        cout << "2. Plano inclinado\n";
+        cout << "3. Convertidor de unidades\n";
+        cout << "4. Salir\n";
+        cout << "\nIngrese una opcion: ";
+        cin >> opcion;
+
+        switch (opcion) {
+            case 1:
+                planoHorizontal();
+                break;
+            case 2:
+                planoInclinado();
+                break;
+            case 3:
+                menuConvertidor();
+                break;
+            case 4:
+                cout << "Saliendo del programa...\n";
+                break;
+            default:
+                cout << "Opcion invalida, intente de nuevo.\n";
+        }
+    } while (opcion != 4);
 }
 
-void conversionAceleracion() {
-    cout << "Proximamente conversiones de aceleracion...\n";
-}
 
-void conversionMasa() {
-    cout << "Proximamente conversiones de masa...\n";
-}
-
-void conversionAngulos() {
-    cout << "Proximamente conversiones de angulos...\n";
+// FUNCIÓN PRINCIPALL
+int main() {
+    system("cls");
+    menuPrincipal();
+    return 0;
 }

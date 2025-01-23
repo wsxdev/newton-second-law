@@ -389,14 +389,24 @@ void planoInclinado() {
     cin >> calcular;
 
     switch (calcular) {
+        // CÁLCULO DE LA FUERZA NORMAL
         case 1:
+            limpiarPantalla();
+            cout << "CALCULANDO LA FUERZA NORMAL\n\n";
             cout << "Ingrese la masa (kg): ";
             cin >> masa;
             cout << "Ingrese el angulo de inclinacion (grados): ";
             cin >> angulo;
-            angulo = angulo * M_PI / 180;  // Convertir a radianes
-            fuerza_equilibrio = masa * gravedad * sin(angulo);
-            cout << "La fuerza para mantener el equilibrio es: " << fuerza_equilibrio << " N\n";
+            angulo = angulo * M_PI / 180;  // CONVERTIR A RADIANES
+            
+            normal = masa * gravedad * cos(angulo);
+            
+            cout << "\nDatos ingresados:\n";
+            cout << "Masa: " << masa << " kg\n";
+            cout << "Angulo: " << angulo << " rad\n";
+
+            cout << "\nRESULTADO\n";
+            cout << "La fuerza normal es: " << normal << " N\n";
             break;
         case 2:
             cout << "Ingrese la fuerza neta (N): ";

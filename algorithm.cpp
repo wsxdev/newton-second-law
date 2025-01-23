@@ -19,7 +19,7 @@ void planoHorizontal() {
     double masa, fuerza, peso, aceleracion, friccion, normal, coef_friccion, gravedad = 9.81;
     string direccion;
 
-    // MENÚ PLANO HORIZONTAL
+    // MENÚ PLANO HORIZONTALL
     cout << "\n====== PLANO HORIZONTAL ======\n";
     cout << "1. En reposo\n";
     cout << "2. En movimiento\n";

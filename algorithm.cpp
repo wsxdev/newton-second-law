@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cmath>
+#include <cstdlib>
 using namespace std;
 
 // Prototipos
@@ -12,9 +13,17 @@ void conversionAceleracion();
 void conversionMasa();
 void conversionAngulos(); */
 
+void limpiarPantalla() {
+    #ifdef _WIN32  // Si estamos en Windows
+        system("cls");
+    #else  // Si estamos en Linux/macOS
+        system("clear");
+    #endif
+}
+
 // PROBLEMAS EN PLANO HORIZONTALL
 void planoHorizontal() {
-    system("cls");      
+    limpiarPantalla();
     int Estado, Calcular, ecuacion;
     double masa, fuerza, peso, aceleracion, friccion, normal, coef_friccion, gravedad = 9.81;
     string direccion;
@@ -28,7 +37,7 @@ void planoHorizontal() {
 
     // CUERPO EN REPOSO
     if (Estado == 1) {
-        system("cls");
+        limpiarPantalla();
         cout << "\nPLANO HORIZONTAL: CUERPO EN REPOSO\n";
         cout << "\nPuede calcular:\n";
         cout << "1. Peso\n";
@@ -40,7 +49,7 @@ void planoHorizontal() {
         switch (Calcular) {
             // CÁLCULO DEL PESO
             case 1:
-                system("cls");
+                limpiarPantalla();
                 cout << "CALCULANDO EL PESO\n\n";
                 cout << "Ingrese la masa (kg): ";
                 cin >> masa;
@@ -54,7 +63,7 @@ void planoHorizontal() {
                 break;
             // CÁLCULO DE LA MASA
             case 2:
-                system("cls");
+                limpiarPantalla();
                 cout << "CALCULANDO LA MASA\n\n";
                 cout << "Ingrese el peso (N): ";
                 cin >> peso;
@@ -68,7 +77,7 @@ void planoHorizontal() {
                 break;
             // CÁLCULO DE LA FUERZA NORMAL
             case 3:
-                system("cls");
+                limpiarPantalla();
                 cout << "CALCULANDO LA FUERZA NORMAL\n\n";
                 cout << "Ingrese la masa (kg): ";
                 cin >> masa;
@@ -105,7 +114,7 @@ void planoHorizontal() {
         switch (Calcular) {
             // CÁLCULO DE LA FUERZA
             case 1:
-                system("cls");
+                limpiarPantalla();
                 cout << "CALCULANDO LA FUERZA\n\n";
                 cout << "Ingrese la masa (kg): ";
                 cin >> masa;
@@ -126,7 +135,7 @@ void planoHorizontal() {
                 break;
             // CÁLCULO DE LA FUERZA NORMAL
             case 2:
-                system("cls");
+                limpiarPantalla();
                 cout << "CALCULANDO LA FUERZA NORMAL\n\n";
                 cout << "Ingrese la masa (kg): ";
                 cin >> masa;
@@ -141,7 +150,7 @@ void planoHorizontal() {
                 break;
             // CÁLCULO DE LA MASA
             case 3:
-                system("cls");
+                limpiarPantalla();
                 cout << "CALCULANDO LA MASA\n\n";
                 cout << "Seleccione la ecuacion a utilizar segun los datos que disponga\n";
                 cout << "          F\n";
@@ -161,7 +170,7 @@ void planoHorizontal() {
                 cin >> ecuacion;
 
                 if (ecuacion == 1){
-                    system("cls");
+                    limpiarPantalla();
                     cout << "CALCULANDO LA MASA\n\n";
                     cout << "Ingrese la fuerza (N): ";
                     cin >> fuerza;
@@ -180,7 +189,7 @@ void planoHorizontal() {
                     cout << "\nRESULTADO\n";
                     cout << "La masa es: " << masa << " kg\n";
                 } else if (ecuacion == 2){
-                    system("cls");
+                    limpiarPantalla();
                     cout << "CALCULANDO LA MASA\n\n";
                     cout << "Ingrese el peso (N): ";
                     cin >> peso;
@@ -198,7 +207,7 @@ void planoHorizontal() {
                 break;
             // CÁLCULO DE LA ACELERACIÓN
             case 4:
-                system("cls");
+                limpiarPantalla();
                 cout << "CALCULANDO LA ACELERACION\n\n";
                 cout << "Ingrese la fuerza (N): ";
                 cin >> fuerza;
@@ -219,7 +228,7 @@ void planoHorizontal() {
                 break;
             // CÁLCULO DEL PESO
             case 5:
-                system("cls");
+                limpiarPantalla();
                 cout << "CALCULANDO EL PESO\n\n";
                 cout << "Ingrese la masa: ";
                 cin >> masa;
@@ -234,7 +243,7 @@ void planoHorizontal() {
                 break;
             // CÁLCULO DE LA FUERZA DE FRICCIÓN
             case 6:
-                system("cls");
+                limpiarPantalla();
                 cout << "CALCULANDO LA FUERZA DE FRICCION\n\n";
                 cout << "Seleccione la ecuacion a utilizar segun los datos que disponga\n";
                 cout << "1. Fr = uN\n";
@@ -250,7 +259,7 @@ void planoHorizontal() {
                 cin >> ecuacion;
 
                 if (ecuacion == 1){
-                    system("cls");
+                    limpiarPantalla();
                     cout << "CALCULANDO LA FUERZA DE FRICCION\n\n";
                     cout << "Ingrese el coeficiente de friccion: ";
                     cin >> coef_friccion;
@@ -266,7 +275,7 @@ void planoHorizontal() {
                     cout << "\nRESULTADO\n";
                     cout << "La fuerza de friccion es: " << friccion << " N\n";
                 } else if (ecuacion == 2){
-                    system("cls");
+                    limpiarPantalla();
                     cout << "CALCULANDO LA FUERZA DE FRICCION\n\n";
                     cout << "Ingrese la fuerza (N): ";
                     cin >> fuerza;
@@ -290,7 +299,7 @@ void planoHorizontal() {
                 break;
             // CÁLCULO DEL COEFICIENTE DE FRICCIÓN
             case 7:
-                system("cls");
+                limpiarPantalla();
                 cout << "CALCULANDO EL COEFICIENTE DE FRICCION\n\n";
                 cout << "Seleccione la ecuacion a utilizar segun los datos que disponga\n";
                 cout << "          Fr\n";
@@ -311,7 +320,7 @@ void planoHorizontal() {
                 cin >> ecuacion;
 
                 if(ecuacion == 1){
-                    system("cls");
+                    limpiarPantalla();
                     cout << "CALCULANDO EL COEFICIENTE DE FRICCION\n\n";
                     cout << "Ingrese la fuerza de rozamiento (N): ";
                     cin >> friccion;
@@ -327,7 +336,7 @@ void planoHorizontal() {
                     cout << "\nRESULTADO\n";
                     cout << "El coeficiente de friccion es: " << coef_friccion << endl;
                 } else if(ecuacion == 2){
-                    system("cls");
+                    limpiarPantalla();
                     cout << "CALCULANDO EL COEFICIENTE DE FRICCION\n\n";
                     cout << "Ingrese la fuerza (N): ";
                     cin >> fuerza;
@@ -360,7 +369,7 @@ void planoHorizontal() {
 
 // Problemas en plano inclinado
 void planoInclinado() {
-    system("cls");
+    limpiarPantalla();
     int calcular;
     double angulo, masa, peso, pesoX, pesoY, normal, fuerza_equilibrio, friccion, coef_friccion, aceleracion, gravedad = 9.81;
     string direccion;
@@ -481,7 +490,7 @@ void conversionAngulos() {
 void menuConvertidor() {
     int opcion;
     do {
-        system("cls");
+        limpiarPantalla();
         cout << "\n| CONVERTIDOR DE UNIDADES |\n";
         cout << "\n1. Fuerza\n";
         cout << "2. Aceleracion\n";
@@ -548,7 +557,7 @@ void menuPrincipal() {
 
 // FUNCIÓN PRINCIPALL
 int main() {
-    system("cls");
+    limpiarPantalla();
     menuPrincipal();
     return 0;
 }

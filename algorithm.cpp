@@ -13,10 +13,11 @@ void conversionAceleracion();
 void conversionMasa();
 void conversionAngulos(); */
 
+// FUNCIÓN LIMPIAR PANTALLA
 void limpiarPantalla() {
-    #ifdef _WIN32  // Si estamos en Windows
+    #ifdef _WIN32  // PARA WINDOWS
         system("cls");
-    #else  // Si estamos en Linux/macOS
+    #else  // PARA LINUX
         system("clear");
     #endif
 }
@@ -107,9 +108,6 @@ void planoHorizontal() {
         cout << "7. Coeficiente de friccion\n";
         cout << "\nSeleccione lo que desea calcular: ";
         cin >> Calcular;
-
-        /* cout << "Ingrese la direccion del movimiento (izquierda/derecha): ";
-        cin >> direccion; */
 
         switch (Calcular) {
             // CÁLCULO DE LA FUERZA
@@ -367,7 +365,7 @@ void planoHorizontal() {
     }
 }
 
-// Problemas en plano inclinado
+// PROBLEMAS EN PLANO INCLINADO
 void planoInclinado() {
     limpiarPantalla();
     int calcular;
@@ -378,15 +376,14 @@ void planoInclinado() {
     //cout << "Ingrese la direccion del movimiento (izquierda/derecha): ";
     //cin >> direccion;
 
-    //Plano inclinado verificado (variables a calcular)
     cout << "\nPuede calcular:\n";
-    cout << "1. Fuerza Normal\n";
+    cout << "1. Fuerza normal\n";
     cout << "2. Masa\n";
     cout << "3. Aceleracion\n";
     cout << "4. Peso\n";
     cout << "5. Peso en X\n";
     cout << "6. Peso en Y\n";
-    cout << "7. Fuerza de rozamiento\n";
+    cout << "7. Fuerza de friccion\n";
     cout << "8. Coeficiente de friccion\n";
     cout << "\nSeleccione lo que desea calcular: ";
     cin >> calcular;

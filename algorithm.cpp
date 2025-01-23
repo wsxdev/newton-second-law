@@ -15,7 +15,7 @@ void conversionAngulos(); */
 // PROBLEMAS EN PLANO HORIZONTALL
 void planoHorizontal() {
     system("cls");      
-    int Estado, Calcular;
+    int Estado, Calcular, ecuacion;
     double masa, fuerza, peso, aceleracion, friccion, normal, coef_friccion, gravedad = 9.81;
     string direccion;
 
@@ -44,6 +44,7 @@ void planoHorizontal() {
                 cout << "CALCULANDO EL PESO\n\n";
                 cout << "Ingrese la masa (kg): ";
                 cin >> masa;
+
                 peso = masa * gravedad;
 
                 cout << "\nDatos ingresados:\n";
@@ -57,6 +58,7 @@ void planoHorizontal() {
                 cout << "CALCULANDO LA MASA\n\n";
                 cout << "Ingrese el peso (N): ";
                 cin >> peso;
+
                 masa = peso / gravedad;
 
                 cout << "\nDatos ingresados:\n";
@@ -70,6 +72,7 @@ void planoHorizontal() {
                 cout << "CALCULANDO LA FUERZA NORMAL\n\n";
                 cout << "Ingrese la masa (kg): ";
                 cin >> masa;
+
                 normal = masa * gravedad;
 
                 cout << "\nDatos ingresados:\n";
@@ -96,34 +99,257 @@ void planoHorizontal() {
         cout << "\nSeleccione lo que desea calcular: ";
         cin >> Calcular;
 
-        cout << "Ingrese la direccion del movimiento (izquierda/derecha): ";
-        cin >> direccion;
+        /* cout << "Ingrese la direccion del movimiento (izquierda/derecha): ";
+        cin >> direccion; */
 
         switch (Calcular) {
+            // CÁLCULO DE LA FUERZA
             case 1:
-                cout << "Ingrese la fuerza neta (N): ";
-                cin >> fuerza;
+                system("cls");
+                cout << "CALCULANDO LA FUERZA\n\n";
                 cout << "Ingrese la masa (kg): ";
                 cin >> masa;
-                aceleracion = fuerza / masa;
-                cout << "La aceleracion es: " << aceleracion << " m/s^2\n";
+                cout << "Ingrese la aceleracion (m/s^2): ";
+                cin >> aceleracion;
+                cout << "Ingrese coeficiente de friccion: ";
+                cin >> coef_friccion;
+
+                fuerza = masa * (aceleracion + coef_friccion * gravedad);
+
+                cout << "\nDatos ingresados:\n";
+                cout << "Masa: " << masa << " kg\n";
+                cout << "Aceleracion: " << aceleracion << " m/s^2\n";
+                cout << "Coeficiente de friccion: " << coef_friccion << endl;
+
+                cout << "\nRESULTADO\n";
+                cout << "La fuerza es: " << fuerza << " N\n";
                 break;
+            // CÁLCULO DE LA FUERZA NORMAL
             case 2:
+                system("cls");
+                cout << "CALCULANDO LA FUERZA NORMAL\n\n";
+                cout << "Ingrese la masa (kg): ";
+                cin >> masa;
+
+                normal = masa * gravedad;
+
+                cout << "\nDatos ingresados:\n";
+                cout << "Masa: " << masa << " kg\n";
+
+                cout << "\nRESULTADO\n";
+                cout << "La fuerza normal es: " << normal << " N\n";
+                break;
+            // CÁLCULO DE LA MASA
+            case 3:
+                system("cls");
+                cout << "CALCULANDO LA MASA\n\n";
+                cout << "Seleccione la ecuacion a utilizar segun los datos que disponga\n";
+                cout << "          F\n";
+                cout << "1. m = --------\n";
+                cout << "        a + ug\n\n";
+                cout << "           W\n";
+                cout << "2. m = --------\n";
+                cout << "           g\n\n";
+                cout << "Donde:\n";
+                cout << "m: masa (kg)\n";
+                cout << "F: fuerza (N)\n";
+                cout << "W: Peso (N)\n";
+                cout << "a: aceleracion (m/s^2)\n";
+                cout << "u: coeficiente de friccion\n";
+                cout << "g: gravedad (m/s^2)\n\n";
+                cout << "Seleccione la ecuacion: ";
+                cin >> ecuacion;
+
+                if (ecuacion == 1){
+                    system("cls");
+                    cout << "CALCULANDO LA MASA\n\n";
+                    cout << "Ingrese la fuerza (N): ";
+                    cin >> fuerza;
+                    cout << "Ingrese la aceleracion (m/s^2): ";
+                    cin >> aceleracion;
+                    cout << "Ingrese el coeficiente de friccion: ";
+                    cin >> coef_friccion;
+
+                    masa = fuerza / (aceleracion + coef_friccion * gravedad);
+
+                    cout << "\nDatos ingresados:\n";
+                    cout << "Fuerza: " << fuerza << " N\n";
+                    cout << "Aceleracion: " << aceleracion << " m/s^2\n";
+                    cout << "Coeficiente de friccion: " << coef_friccion << endl;
+
+                    cout << "\nRESULTADO\n";
+                    cout << "La masa es: " << masa << " kg\n";
+                } else if (ecuacion == 2){
+                    system("cls");
+                    cout << "CALCULANDO LA MASA\n\n";
+                    cout << "Ingrese el peso (N): ";
+                    cin >> peso;
+
+                    masa = peso / gravedad;
+
+                    cout << "\nDatos ingresados:\n";
+                    cout << "Peso: " << peso << " N\n";
+
+                    cout << "\nRESULTADO\n";
+                    cout << "La masa es: " << masa << " kg\n";
+                } else {
+                    cout << "\nOpcion no valida\n";
+                }
+                break;
+            // CÁLCULO DE LA ACELERACIÓN
+            case 4:
+                system("cls");
+                cout << "CALCULANDO LA ACELERACION\n\n";
+                cout << "Ingrese la fuerza (N): ";
+                cin >> fuerza;
                 cout << "Ingrese el coeficiente de friccion: ";
                 cin >> coef_friccion;
                 cout << "Ingrese la masa (kg): ";
                 cin >> masa;
-                friccion = coef_friccion * masa * gravedad;
-                cout << "La fuerza de friccion es: " << friccion << " N\n";
+
+                aceleracion = (fuerza - coef_friccion * masa * gravedad) / masa;
+
+                cout << "\nDatos ingresados:\n";
+                cout << "Fuerza: " << fuerza << " N\n";
+                cout << "Coeficiente de friccion: " << coef_friccion << endl;
+                cout << "Masa: " << masa << " kg\n";
+
+                cout << "\nRESULTADO\n";
+                cout << "La aceleracion es: " << aceleracion << " m/s^2\n";
                 break;
-            case 3:
-                cout << "Ingrese la fuerza de friccion (N): ";
-                cin >> friccion;
-                cout << "Ingrese la masa (kg): ";
+            // CÁLCULO DEL PESO
+            case 5:
+                system("cls");
+                cout << "CALCULANDO EL PESO\n\n";
+                cout << "Ingrese la masa: ";
                 cin >> masa;
-                coef_friccion = friccion / (masa * gravedad);
-                cout << "El coeficiente de friccion es: " << coef_friccion << "\n";
+
+                peso = masa * gravedad;
+
+                cout << "\nDatos ingresados:\n";
+                cout << "Masa: " << masa << " kg\n";
+
+                cout << "\nRESULTADO\n";
+                cout << "El peso es: " << peso << " N\n";
                 break;
+            // CÁLCULO DE LA FUERZA DE FRICCIÓN
+            case 6:
+                system("cls");
+                cout << "CALCULANDO LA FUERZA DE FRICCION\n\n";
+                cout << "Seleccione la ecuacion a utilizar segun los datos que disponga\n";
+                cout << "1. Fr = uN\n";
+                cout << "2. Fr = F - ma\n\n";
+                cout << "Donde:\n";
+                cout << "Fr: fuerza de rozamiento (N)\n";
+                cout << "u: coeficiente de friccion\n";
+                cout << "N: fuerza normal (N)\n";
+                cout << "F: fuerza (N)\n";
+                cout << "m: masa (kg)\n";
+                cout << "a: aceleracion (m/s^2)\n\n";
+                cout << "Seleccione la ecuacion: ";
+                cin >> ecuacion;
+
+                if (ecuacion == 1){
+                    system("cls");
+                    cout << "CALCULANDO LA FUERZA DE FRICCION\n\n";
+                    cout << "Ingrese el coeficiente de friccion: ";
+                    cin >> coef_friccion;
+                    cout << "Ingrese la fuerza normal (N): ";
+                    cin >> normal;
+
+                    friccion = coef_friccion * normal;
+
+                    cout << "\nDatos ingresados:\n";
+                    cout << "Coeficiente de friccion: " << coef_friccion << endl;
+                    cout << "Fuerza normal: " << normal << " N\n";
+
+                    cout << "\nRESULTADO\n";
+                    cout << "La fuerza de friccion es: " << friccion << " N\n";
+                } else if (ecuacion == 2){
+                    system("cls");
+                    cout << "CALCULANDO LA FUERZA DE FRICCION\n\n";
+                    cout << "Ingrese la fuerza (N): ";
+                    cin >> fuerza;
+                    cout << "Ingrese la masa (kg): ";
+                    cin >> masa;
+                    cout << "Ingrese la aceleracion (m/s^2): ";
+                    cin >> aceleracion;
+
+                    friccion = fuerza - masa * aceleracion;
+
+                    cout << "\nDatos ingresados:\n";
+                    cout << "Fuerza: " << fuerza << " N\n";
+                    cout << "Masa: " << masa << " kg\n";
+                    cout << "Aceleracion: " << aceleracion << " m/s^2\n";
+
+                    cout << "\nRESULTADO\n";
+                    cout << "La fuerza de friccion es: " << friccion << " N\n";
+                } else {
+                    cout << "Opcion no valida\n";
+                }
+                break;
+            // CÁLCULO DEL COEFICIENTE DE FRICCIÓN
+            case 7:
+                system("cls");
+                cout << "CALCULANDO EL COEFICIENTE DE FRICCION\n\n";
+                cout << "Seleccione la ecuacion a utilizar segun los datos que disponga\n";
+                cout << "          Fr\n";
+                cout << "1. u = --------\n";
+                cout << "          N\n\n";
+                cout << "        F - ma\n";
+                cout << "2. u = --------\n";
+                cout << "          mg\n\n";
+                cout << "Donde: \n";
+                cout << "u: coeficiente de friccion\n";
+                cout << "Fr: fuerza de rozamiento (N)\n";
+                cout << "N: fuerza normal (N)\n";
+                cout << "F: fuerza (N)\n";
+                cout << "m: masa (kg)\n";
+                cout << "a: aceleracion (m/s^2)\n";
+                cout << "g: gravedad (m/s^2)\n\n";
+                cout << "Seleccione la ecuacion: ";
+                cin >> ecuacion;
+
+                if(ecuacion == 1){
+                    system("cls");
+                    cout << "CALCULANDO EL COEFICIENTE DE FRICCION\n\n";
+                    cout << "Ingrese la fuerza de rozamiento (N): ";
+                    cin >> friccion;
+                    cout << "Ingrese la fuerza normal (N): ";
+                    cin >> normal;
+
+                    coef_friccion = friccion / normal;
+
+                    cout << "\nDatos ingresados:\n";
+                    cout << "Fuerza de rozamiento: " << friccion << " N\n";
+                    cout << "Fuerza normal: " << normal << " N\n";
+
+                    cout << "\nRESULTADO\n";
+                    cout << "El coeficiente de friccion es: " << coef_friccion << endl;
+                } else if(ecuacion == 2){
+                    system("cls");
+                    cout << "CALCULANDO EL COEFICIENTE DE FRICCION\n\n";
+                    cout << "Ingrese la fuerza (N): ";
+                    cin >> fuerza;
+                    cout << "Ingrese la masa (kg): ";
+                    cin >> masa;
+                    cout << "Ingrese la aceleracion (m/s^2): ";
+                    cin >> aceleracion;
+
+                    coef_friccion = (fuerza - masa * aceleracion) / (masa * gravedad);
+
+                    cout << "\nDatos ingresados:\n";
+                    cout << "Fuerza: " << fuerza << " N\n";
+                    cout << "Masa: " << masa << " kg\n";
+                    cout << "Aceleracion: " << aceleracion << " m/s^2\n";
+
+                    cout << "\nRESULTADO\n";
+                    cout << "El coeficiente de friccion es: " << coef_friccion << endl;
+                } else {
+                    cout << "Opcion no valida\n";
+                }
+                break;
+
             default:
                 cout << "Opcion invalida.\n";
         }

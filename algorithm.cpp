@@ -408,7 +408,10 @@ void planoInclinado() {
             cout << "\nRESULTADO\n";
             cout << "La fuerza normal es: " << normal << " N\n";
             break;
+        // CÁLCULO DE LA MASA
         case 2:
+            limpiarPantalla();
+            cout << "CALCULANDO LA FUERZA NORMAL\n\n";
             cout << "Ingrese la fuerza neta (N): ";
             cin >> fuerza_equilibrio;
             cout << "Ingrese la masa (kg): ";

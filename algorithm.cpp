@@ -3,23 +3,75 @@
 #include <cstdlib>
 using namespace std;
 
-// Prototipos
-/* void menuPrincipal();
+// PROCEDIMIENTOS MENÚS
+void menuPrincipal();
 void planoHorizontal();
 void planoInclinado();
 void menuConvertidor();
+
+// PROCEDIMIENTOS CONVERSIONES DE UNIDADES
 void conversionFuerza();
 void conversionAceleracion();
 void conversionMasa();
-void conversionAngulos(); */
+void conversionAngulos();
 
-// FUNCIÓN LIMPIAR PANTALLA
+// PROCEDIMIENTO LIMPIAR PANTALLA Y ESPERA DE ENTRADA
+void limpiarPantalla();
+void presionarEnterParaContinuar();
+
+// FUNCIÓN PRINCIPAL
+int main() {
+    limpiarPantalla();
+    menuPrincipal();
+    return 0;
+}
+
+// LIMPIAR PANTALLA
 void limpiarPantalla() {
     #ifdef _WIN32  // PARA WINDOWS
         system("cls");
     #else  // PARA LINUX
         system("clear");
     #endif
+}
+
+// PROCEDIMIENTO ESPERA DE ENTRADA
+void presionarEnterParaContinuar() {
+    cout << "\nPresione Enter para continuar...";
+    cin.ignore(); // IGNORA CUALQUIER ENTRADA PREVIA
+    cin.get();    // ESPERA QUE EL USUARIO PRESIONE ENTER
+}
+
+// MENÚ PRINCIPAL DEL PROGRAMA
+void menuPrincipal() {
+    int opcion;
+    do {
+        cout << "\nSEGUNDA LEY DE NEWTON: LEY FUNDAMENTAL DE LA DINAMICA\n";
+        cout << "\n================== MENU PRINCIPAL ===================\n";
+        cout << "1. Plano horizontal\n";
+        cout << "2. Plano inclinado\n";
+        cout << "3. Convertidor de unidades\n";
+        cout << "4. Salir\n";
+        cout << "\nIngrese una opcion: ";
+        cin >> opcion;
+
+        switch (opcion) {
+            case 1:
+                planoHorizontal();
+                break;
+            case 2:
+                planoInclinado();
+                break;
+            case 3:
+                menuConvertidor();
+                break;
+            case 4:
+                cout << "Saliendo del programa...\n";
+                break;
+            default:
+                cout << "Opcion invalida, intente de nuevo.\n";
+        }
+    } while (opcion != 4);
 }
 
 // PROBLEMAS EN PLANO HORIZONTALL
@@ -97,6 +149,7 @@ void planoHorizontal() {
     } 
     // CUERPO EN MOVIMIENTO
     else if (Estado == 2) {
+        limpiarPantalla();
         cout << "\nPLANO HORIZONTAL: CUERPO EN MOVIMIENTO\n";
         cout << "\nPuede calcular:\n";
         cout << "1. Fuerza\n";
@@ -625,24 +678,7 @@ void planoInclinado() {
     }
 }
 
-
-void conversionFuerza() {
-    cout << "Proximamente conversiones de fuerza...\n";
-}
-
-void conversionAceleracion() {
-    cout << "Proximamente conversiones de aceleracion...\n";
-}
-
-void conversionMasa() {
-    cout << "Proximamente conversiones de masa...\n";
-}
-
-void conversionAngulos() {
-    cout << "Proximamente conversiones de angulos...\n";
-}
-
-// Convertidor de unidades
+// MENÚ CONVERTIDOR DE UNIDADES
 void menuConvertidor() {
     int opcion;
     do {
@@ -678,42 +714,241 @@ void menuConvertidor() {
     } while (opcion != 5);
 }
 
-// MENÚ PRINCIPAL
-void menuPrincipal() {
+// PROCEDIMIENTO CONVERSIÓN DE FUERZA
+void conversionFuerza() {
     int opcion;
-    do {
-        cout << "\nSEGUNDA LEY DE NEWTON: LEY FUNDAMENTAL DE LA DINAMICA\n";
-        cout << "\n================== MENU PRINCIPAL ===================\n";
-        cout << "1. Plano horizontal\n";
-        cout << "2. Plano inclinado\n";
-        cout << "3. Convertidor de unidades\n";
-        cout << "4. Salir\n";
-        cout << "\nIngrese una opcion: ";
-        cin >> opcion;
+    double valor, resultado;
 
-        switch (opcion) {
-            case 1:
-                planoHorizontal();
-                break;
-            case 2:
-                planoInclinado();
-                break;
-            case 3:
-                menuConvertidor();
-                break;
-            case 4:
-                cout << "Saliendo del programa...\n";
-                break;
-            default:
-                cout << "Opcion invalida, intente de nuevo.\n";
-        }
-    } while (opcion != 4);
+    limpiarPantalla();
+    cout << "CONVERSIONES DE FUERZA\n\n";
+    cout << "1. Newtons (N)         > Dinas\n";
+    cout << "2. Dinas               > Newtons (N)\n";
+    cout << "3. Newtons (N)         > Libras-fuerza (lbf)\n";
+    cout << "4. Libras-fuerza (lbf) > Newtons (N)\n";
+    cout << "5. Newtons (N)         > Kilopondios (kp)\n";
+    cout << "6. Kilopondios (kp)    > Newtons (N)\n";
+    cout << "7. Kilopondios (kp)    > Libras-fuerza (lbf)\n";
+    cout << "8. Libras-fuerza (lbf) > Kilopondios (kp)\n";
+    cout << "\nIngrese una opcion: ";
+    cin >> opcion;
+
+    cout << "\nIngrese el valor a convertir: ";
+    cin >> valor;
+
+    switch (opcion){
+        // NEWTONS A DINAS
+        case 1:
+            resultado = valor * 1e5; // 1 N = 100000 Dinas
+            cout << valor << " N = " << resultado << " Dinas\n";
+            break;
+        // DINAS A NEWTONS
+        case 2:
+            resultado = valor / 1e5;
+            cout << valor << " Dinas = " << resultado << " N\n";
+            break;
+        // NEWTONS A LIBRAS-FUERZA
+        case 3:
+            resultado = valor / 4.44822; // 1 lbf = 4.44822 N
+            cout << valor << " N = " << resultado << " lbf\n";
+            break;
+        // LIBRAS-FUERZA A NEWTONS
+        case 4:
+            resultado = valor * 4.44822;
+            cout << valor << " lbf = " << resultado << " N\n";
+            break;
+        // NEWTONS A KILOPONDIOS
+        case 5:
+            resultado = valor / 9.80665; // 1 kp = 9.80665 N
+            cout << valor << " N = " << resultado << " kp\n";
+            break;
+        // KILOPONDIOS A NEWTONS
+        case 6:
+            resultado = valor * 9.80665;
+            cout << valor << " kp = " << resultado << " N\n";
+            break;
+        // KILOPONDIOS A LIBRAS-FUERZA
+        case 7:
+            resultado = valor * 2.20462; // 1 kp = 2.20462 lbf
+            cout << valor << " kp = " << resultado << " lbf\n";
+            break;
+        // LIBRAS-FUERZA A KILOPONDIOS
+        case 8:
+            resultado = valor / 2.20462;
+            cout << valor << " lbf = " << resultado << " kp\n";
+            break;
+        default:
+            break;
+    }
+    presionarEnterParaContinuar();
 }
 
+// PROCEDIMIENTO CONVERSIÓN DE ACELERACIÓN
+void conversionAceleracion() {
+    int opcion;
+    double valor, resultado;
 
-// FUNCIÓN PRINCIPALL
-int main() {
     limpiarPantalla();
-    menuPrincipal();
-    return 0;
+    cout << "CONVERSIONES DE ACELERACION\n\n";
+    cout << "1. m/s^2   > ft/s^2\n";
+    cout << "2. ft/s^2  > m/s^2\n";
+    cout << "3. m/s^2   > cm/s^2\n";
+    cout << "4. cm/s^2  > m/s^2\n";
+    cout << "5. m/s^2   > km/h^2\n";
+    cout << "6. km/h^2 -> m/s^2\n";
+    cout << "\nIngrese una opcion: ";
+    cin >> opcion;
+
+    cout << "\nIngrese el valor a convertir: ";
+    cin >> valor;
+
+    switch (opcion) {
+        // m/s^2 a ft/s^2
+        case 1:
+            resultado = valor * 3.28084;
+            cout << valor << " m/s^2 = " << resultado << " ft/s^2\n";
+            break;
+        // ft/s^2 a m/s^2
+        case 2: 
+            resultado = valor / 3.28084;
+            cout << valor << " ft/s^2 = " << resultado << " m/s^2\n";
+            break;
+        // m/s^2 a cm/s^2
+        case 3: 
+            resultado = valor * 100;
+            cout << valor << " m/s^2 = " << resultado << " cm/s^2\n";
+            break;
+        // cm/s^2 a m/s^2
+        case 4: 
+            resultado = valor / 100;
+            cout << valor << " cm/s^2 = " << resultado << " m/s^2\n";
+            break;
+        // m/s^2 a km/h^2
+        case 5:
+            resultado = valor * 12960; // 1 m/s^2 = 12960 km/h^2
+            cout << valor << " m/s^2 = " << resultado << " km/h^2\n";
+            break;
+        // km/h^2 a m/s^2
+        case 6:
+            resultado = valor / 12960;
+            cout << valor << " km/h^2 = " << resultado << " m/s^2\n";
+            break;
+        default:
+            cout << "Opcion invalida.\n";
+            break;
+    }
+    presionarEnterParaContinuar();
+}
+
+// PROCEDIMIENTO CONVERSIÓN DE MASA
+void conversionMasa() {
+    int opcion;
+    double valor, resultado;
+
+    limpiarPantalla();
+    cout << "CONVERSIONES DE MASA\n\n";
+    cout << "1. Kilogramos (kg)   > Gramos (g)\n";
+    cout << "2. Gramos (g)        > Kilogramos (kg)\n";
+    cout << "3. Kilogramos (kg)   > Slugs\n";
+    cout << "4. Slugs             > Kilogramos (kg)\n";
+    cout << "5. Kilogramos (kg)   > Libras (lb)\n";
+    cout << "6. Libras (lb)       > Kilogramos (kg)\n";
+    cout << "7. Kilogramos (kg)   > Onzas (oz)\n";
+    cout << "8. Onzas (oz)        > Kilogramos (kg)\n";
+    cout << "9. Kilogramos (kg)   > Toneladas (t)\n";
+    cout << "10. Toneladas (t)    > Kilogramos (kg)\n";
+    cout << "\nIngrese una opcion: ";
+    cin >> opcion;
+
+    cout << "\nIngrese el valor a convertir: ";
+    cin >> valor;
+
+    switch (opcion) {
+        // KILOGRAMOS A GRAMOS
+        case 1:
+            resultado = valor * 1000; // 1 kg = 1000 g
+            cout << valor << " kg = " << resultado << " g\n";
+            break;
+        // GRAMOS A KILOGRAMOS
+        case 2:
+            resultado = valor / 1000;
+            cout << valor << " g = " << resultado << " kg\n";
+            break;
+        // KILOGRAMOS A SLUGS
+        case 3:
+            resultado = valor / 14.5939; // 1 slug = 14.5939 kg
+            cout << valor << " kg = " << resultado << " slugs\n";
+            break;
+        // SLUGS A KILOGRAMOS
+        case 4:
+            resultado = valor * 14.5939;
+            cout << valor << " slugs = " << resultado << " kg\n";
+            break;
+        // KILOGRAMOS A LIBRAS
+        case 5:
+            resultado = valor * 2.20462; // 1 kg = 2.20462 lb
+            cout << valor << " kg = " << resultado << " lb\n";
+            break;
+        // LIBRAS A KILOGRAMOS
+        case 6:
+            resultado = valor / 2.20462;
+            cout << valor << " lb = " << resultado << " kg\n";
+            break;
+        // KILOGRAMOS A ONZAS
+        case 7:
+            resultado = valor * 35.274; // 1 kg = 35.274 oz
+            cout << valor << " kg = " << resultado << " oz\n";
+            break;
+        // ONZAS A KILOGRAMOS
+        case 8:
+            resultado = valor / 35.274;
+            cout << valor << " oz = " << resultado << " kg\n";
+            break;
+        // KILOGRAMOS A TONELADAS
+        case 9:
+            resultado = valor / 1000; // 1 tonelada = 1000 kg
+            cout << valor << " kg = " << resultado << " t\n";
+            break;
+        // TONELADAS A KILOGRAMOS
+        case 10:
+            resultado = valor * 1000;
+            cout << valor << " t = " << resultado << " kg\n";
+            break;
+        default:
+            cout << "Opcion invalida.\n";
+            break;
+    }
+    presionarEnterParaContinuar();
+}
+
+// PROCEDIMIENTO CONVERSIÓN DE ÁNGULOS
+void conversionAngulos() {
+    int opcion;
+    double valor, resultado;
+
+    limpiarPantalla();
+    cout << "CONVERSIONES DE ANGULOS\n\n";
+    cout << "1. Grados (°)      > Radianes (rad)\n";
+    cout << "2. Radianes (rad)  > Grados (°)\n";
+    cout << "\nIngrese una opcion: ";
+    cin >> opcion;
+
+    cout << "\nIngrese el valor a convertir: ";
+    cin >> valor;
+
+    switch (opcion) {
+        // GRADOS A RADIANES
+        case 1:
+            resultado = valor * (M_PI / 180); // 1° = pi/180 rad
+            cout << valor << "° = " << resultado << " rad\n";
+            break;
+        // RADIANES A GRADOS
+        case 2:
+            resultado = valor * (180 / M_PI); // 1 rad = 180/pi °
+            cout << valor << " rad = " << resultado << "°\n";
+            break;
+        default:
+            cout << "Opcion invalida.\n";
+            break;
+    }
+    presionarEnterParaContinuar();
 }

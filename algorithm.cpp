@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cmath>
 #include <cstdlib>
+#include <limits>
 using namespace std;
 
 // CONSTANTE GRAVEDAD

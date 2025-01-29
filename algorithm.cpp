@@ -260,7 +260,7 @@ void planoHorizontal() {
                     }
                 
                 } while (Opcion != 4);
-            break;
+                break;
 
             // CUERPO EN MOVIMIENTO - PLANO HORIZONTAL
             case 2:
@@ -289,14 +289,20 @@ void planoHorizontal() {
                                 cout << "CALCULANDO LA FUERZA\n\n";
                                 cout << "Ingrese la masa (kg): ";
                                 Masa = leerNumero();
-                                if (valorMayorCero(Masa, "masa")) {} else {continue;}
+                                if (valorMayorCero(Masa, "masa")) {break;} else {continue;}
+                            } while (true);
 
+                            do {
                                 cout << "Ingrese la aceleracion (m/s^2): ";
                                 Aceleracion = leerNumero();
-                                if (valorMayorCero(Aceleracion, "aceleracion")) {} else {break;}
-
+                                if (valorMayorCero(Aceleracion, "aceleracion")) {break;} else {continue;}
+                            } while (true);
+                                
+                            do {
                                 cout << "Ingrese coeficiente de friccion: ";
                                 Coef_Friccion = leerNumero();
+                                if (valorMayorCero(Coef_Friccion, "coeficiente de friccion")) {break;} else {continue;}
+                            } while (true);
 
                                 Fuerza = Masa * (Aceleracion + Coef_Friccion * GRAVEDAD);
 
@@ -308,8 +314,6 @@ void planoHorizontal() {
                                 cout << "\nRESULTADO\n";
                                 cout << "La fuerza es: " << Fuerza << " N\n";
                                 presionarEnterParaContinuar();
-                                break;
-                            } while (true);
                             
                             break;
                         // CÁLCULO DE LA FUERZA NORMAL - PLANO HORIZONTAL CUERPO EN MOVIMIENTO
@@ -321,15 +325,18 @@ void planoHorizontal() {
                                 cout << "Ingrese la masa (kg): ";
                                 Masa = leerNumero();
 
-                                Fuerza_Normal = Masa * GRAVEDAD;
+                                if (valorMayorCero(Masa, "masa")) {
+                                    Fuerza_Normal = Masa * GRAVEDAD;
 
-                                cout << "\nDatos ingresados:\n";
-                                cout << "Masa: " << Masa << " kg\n";
+                                    cout << "\nDatos ingresados:\n";
+                                    cout << "Masa: " << Masa << " kg\n";
 
-                                cout << "\nRESULTADO\n";
-                                cout << "La fuerza normal es: " << Fuerza_Normal << " N\n";
-                                presionarEnterParaContinuar();
-                                break;
+                                    cout << "\nRESULTADO\n";
+                                    cout << "La fuerza normal es: " << Fuerza_Normal << " N\n";
+                                    presionarEnterParaContinuar();
+                                    break;
+                                }
+                                
                             } while (true);
                             
                             break;
@@ -345,7 +352,9 @@ void planoHorizontal() {
                                 cout << "        a + ug\n\n";
                                 cout << "           W\n";
                                 cout << "2. m = --------\n";
-                                cout << "           g\n\n";
+                                cout << "           g\n";
+                                cout << "3. Volver\n";
+                                cout << "4. Salir\n\n";
                                 cout << "Donde:\n";
                                 cout << "m: masa (kg)\n";
                                 cout << "F: fuerza (N)\n";
@@ -354,28 +363,65 @@ void planoHorizontal() {
                                 cout << "u: coeficiente de friccion\n";
                                 cout << "g: gravedad (m/s^2)\n\n";
                                 cout << "Seleccione la ecuacion: ";
-                                cin >> Ecuacion;
+                                Ecuacion = leerOpcion();
 
+                                switch (Ecuacion){
+                                    // SE CALCULA LA MASA CON LA ECUACIÓN 1
+                                    case 1:
+                                        limpiarPantalla();
+                                        
+                                        do {
+                                            cout << "CALCULANDO LA MASA\n\n";
+                                            cout << "Ingrese la fuerza (N): ";
+                                            Fuerza = leerNumero();
+                                            if (valorMayorCero(Fuerza, "fuerza")) {break;} else {continue;}
+                                        } while(true);
+                                        
+                                        do {
+                                            cout << "Ingrese la aceleracion (m/s^2): ";
+                                            Aceleracion = leerNumero();
+                                            if (valorMayorCero(Aceleracion, "aceleracion")) {break;} else {continue;}
+                                        } while (true);
+
+                                        do {
+                                            cout << "Ingrese el coeficiente de friccion, entre [0 y 1]: ";
+                                            Coef_Friccion = leerNumero();
+                                            if ((Coef_Friccion > 0 ) && (Coef_Friccion <= 1)) {break;} else {limpiarPantalla(); cout << "El coeficiente de friccion debe estar entre 0 y 1\n"; continue;}
+                                        } while (true);
+
+                                        Masa = Fuerza / (Aceleracion + Coef_Friccion * GRAVEDAD);
+
+                                        cout << "\nDatos ingresados:\n";
+                                        cout << "Fuerza: " << Fuerza << " N\n";
+                                        cout << "Aceleracion: " << Aceleracion << " m/s^2\n";
+                                        cout << "Coeficiente de friccion: " << Coef_Friccion << endl;
+
+                                        cout << "\nRESULTADO\n";
+                                        cout << "La masa es: " << Masa << " kg\n";
+                                        presionarEnterParaContinuar();
+                                        break;
+                                    // SE CALCULA LA MASA CON LA ECUACIÓN 2
+                                    case 2:
+                                        limpiarPantalla();
+                                        //do{}
+                                        break;
+                                    // VOLVER AL MENÚ PRINCIPAL
+                                    case 3:
+                                        limpiarPantalla();
+                                        break;
+                                    // SALIR DEL PROGRAMA
+                                    case 4:
+                                        cout << "Saliendo del programa...\n";
+                                        exit(0);
+                                        break;
+                                    default:
+                                        limpiarPantalla();
+                                        cout << "Error: inserte una opcion del 1 al 4\n";
+                                        break;
+                                }
                                 if (Ecuacion == 1){
                                     limpiarPantalla();
-                                    cout << "CALCULANDO LA MASA\n\n";
-                                    cout << "Ingrese la fuerza (N): ";
-                                    cin >> Fuerza;
-                                    cout << "Ingrese la aceleracion (m/s^2): ";
-                                    cin >> Aceleracion;
-                                    cout << "Ingrese el coeficiente de friccion: ";
-                                    cin >> Coef_Friccion;
-
-                                    Masa = Fuerza / (Aceleracion + Coef_Friccion * GRAVEDAD);
-
-                                    cout << "\nDatos ingresados:\n";
-                                    cout << "Fuerza: " << Fuerza << " N\n";
-                                    cout << "Aceleracion: " << Aceleracion << " m/s^2\n";
-                                    cout << "Coeficiente de friccion: " << Coef_Friccion << endl;
-
-                                    cout << "\nRESULTADO\n";
-                                    cout << "La masa es: " << Masa << " kg\n";
-                                    presionarEnterParaContinuar();
+                                    
                                 } else if (Ecuacion == 2){
                                     limpiarPantalla();
                                     cout << "CALCULANDO LA MASA\n\n";
@@ -393,7 +439,7 @@ void planoHorizontal() {
                                 } else {
                                     cout << "\nOpcion no valida\n";
                                 }
-                            } while (true);
+                            } while (Ecuacion != 3);
                             
                             break;
                         // CÁLCULO DE LA ACELERACIÓN - PLANO HORIZONTAL CUERPO EN MOVIMIENTO
@@ -569,6 +615,7 @@ void planoHorizontal() {
                             cout << "Error, inserte una opcion del 1 al 9\n";
                             break;
                     }
+
                 } while (Opcion != 8);
                 break;
             // VOLVER AL MENÚ ANTERIOR

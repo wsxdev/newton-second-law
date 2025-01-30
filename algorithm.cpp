@@ -31,6 +31,8 @@ void presionarEnterParaContinuar();
 // FUNCIONES VALIDAR ENTRADA PARA CÁLCULOS Y OPCIONES
 double leerNumero();
 int leerOpcion();
+bool validarMayorCero(double dato, string nombreDato);
+
 
 // FUNCIÓN PRINCIPAL
 int main() {
@@ -101,7 +103,7 @@ int leerOpcion() {
 }
 
 // VALORES MAYORES A CERO
-bool valorMayorCero(double dato, string nombreDato){
+bool validarMayorCero(double dato, string nombreDato){
     if (dato > 0){
         return true; // DATO VÁLIDO
     } else {
@@ -110,6 +112,30 @@ bool valorMayorCero(double dato, string nombreDato){
         return false; // DATO NO VÁLIDO
     }
 }
+
+// Función para calcular el peso
+double calcularPeso(double masa) {
+    return masa * GRAVEDAD;
+}
+
+// Función para calcular y mostrar el peso plano horizontal
+void calcularYMostrarPeso() {
+    double masa;
+    do {
+        cout << "CALCULANDO EL PESO\n\n";
+        cout << "Ingrese la masa (kg): ";
+        masa = leerNumero();
+    } while (!validarMayorCero(masa, "masa"));
+
+    double peso = calcularPeso(masa);
+
+    cout << "\nDatos ingresados:\n";
+    cout << "Masa: " << masa << " kg\n";
+    cout << "\nRESULTADO\n";
+    cout << "El peso es: " << peso << " N\n";
+    presionarEnterParaContinuar();
+}
+
 
 // MENÚ PRINCIPAL DEL PROGRAMA
 void menuPrincipal() {
@@ -176,26 +202,7 @@ void planoHorizontal() {
                         // CÁLCULO DEL PESO - PLANO HORIZONTAL CUERPO EN REPOSO
                         case 1:
                             limpiarPantalla();
-
-                            do {
-                                cout << "CALCULANDO EL PESO\n\n";
-                                cout << "Ingrese la masa (kg): ";
-                                Masa = leerNumero();
-
-                                // VALIDAR MASA MAYOR A 0
-                                if (valorMayorCero(Masa, "masa")) {
-                                    Peso = Masa * GRAVEDAD;
-
-                                    cout << "\nDatos ingresados:\n";
-                                    cout << "Masa: " << Masa << " kg\n";
-                                    cout << "\nRESULTADO\n";
-                                    cout << "El peso es: " << Peso << " N\n";
-                                    presionarEnterParaContinuar();
-                                    break;
-                                }
-                                
-                            } while (true);
-                            
+                            calcularYMostrarPeso();
                             break;
                         // CÁLCULO DE LA MASA - PLANO HORIZONTAL CUERPO EN REPOSO
                         case 2:
@@ -207,7 +214,7 @@ void planoHorizontal() {
                                 Peso = leerNumero();
 
                                 // VALIDAR PESO MAYOR A 0
-                                if (valorMayorCero(Peso, "peso")) {
+                                if (validarMayorCero(Peso, "peso")) {
                                     Masa = Peso / GRAVEDAD;
 
                                     cout << "\nDatos ingresados:\n";
@@ -230,7 +237,7 @@ void planoHorizontal() {
                                 cout << "Ingrese la masa (kg): ";
                                 Masa = leerNumero();
 
-                                if (valorMayorCero(Masa, "masa")) {
+                                if (validarMayorCero(Masa, "masa")) {
                                     Fuerza_Normal = Masa * GRAVEDAD;
 
                                     cout << "\nDatos ingresados:\n";
@@ -289,19 +296,19 @@ void planoHorizontal() {
                                 cout << "CALCULANDO LA FUERZA\n\n";
                                 cout << "Ingrese la masa (kg): ";
                                 Masa = leerNumero();
-                                if (valorMayorCero(Masa, "masa")) {break;} else {continue;}
+                                if (validarMayorCero(Masa, "masa")) {break;} else {continue;}
                             } while (true);
 
                             do {
                                 cout << "Ingrese la aceleracion (m/s^2): ";
                                 Aceleracion = leerNumero();
-                                if (valorMayorCero(Aceleracion, "aceleracion")) {break;} else {continue;}
+                                if (validarMayorCero(Aceleracion, "aceleracion")) {break;} else {continue;}
                             } while (true);
                                 
                             do {
                                 cout << "Ingrese coeficiente de friccion: ";
                                 Coef_Friccion = leerNumero();
-                                if (valorMayorCero(Coef_Friccion, "coeficiente de friccion")) {break;} else {continue;}
+                                if (validarMayorCero(Coef_Friccion, "coeficiente de friccion")) {break;} else {continue;}
                             } while (true);
 
                                 Fuerza = Masa * (Aceleracion + Coef_Friccion * GRAVEDAD);
@@ -325,7 +332,7 @@ void planoHorizontal() {
                                 cout << "Ingrese la masa (kg): ";
                                 Masa = leerNumero();
 
-                                if (valorMayorCero(Masa, "masa")) {
+                                if (validarMayorCero(Masa, "masa")) {
                                     Fuerza_Normal = Masa * GRAVEDAD;
 
                                     cout << "\nDatos ingresados:\n";
@@ -374,19 +381,19 @@ void planoHorizontal() {
                                             cout << "CALCULANDO LA MASA\n\n";
                                             cout << "Ingrese la fuerza (N): ";
                                             Fuerza = leerNumero();
-                                            if (valorMayorCero(Fuerza, "fuerza")) {break;} else {continue;}
+                                            if (validarMayorCero(Fuerza, "fuerza")) {break;} else {continue;}
                                         } while(true);
                                         
                                         do {
                                             cout << "Ingrese la aceleracion (m/s^2): ";
                                             Aceleracion = leerNumero();
-                                            if (valorMayorCero(Aceleracion, "aceleracion")) {break;} else {continue;}
+                                            if (validarMayorCero(Aceleracion, "aceleracion")) {break;} else {continue;}
                                         } while (true);
 
                                         do {
                                             cout << "Ingrese el coeficiente de friccion, entre [0 y 1]: ";
                                             Coef_Friccion = leerNumero();
-                                            if ((Coef_Friccion > 0 ) && (Coef_Friccion <= 1)) {break;} else {limpiarPantalla(); cout << "El coeficiente de friccion debe estar entre 0 y 1\n"; continue;}
+                                            if ((Coef_Friccion > 0 ) && (Coef_Friccion <= 1)) {break;} else {limpiarPantalla(); cout << "El coeficiente de friccion debe estar entre 0 y 1\n\n"; continue;}
                                         } while (true);
 
                                         Masa = Fuerza / (Aceleracion + Coef_Friccion * GRAVEDAD);
@@ -403,7 +410,20 @@ void planoHorizontal() {
                                     // SE CALCULA LA MASA CON LA ECUACIÓN 2
                                     case 2:
                                         limpiarPantalla();
-                                        //do{}
+                                        do{
+                                            cout << "CALCULANDO LA MASA\n\n";
+                                            cout << "Ingrese el peso (N): ";
+                                            Peso = leerNumero();
+                                            if (validarMayorCero(Peso, "peso")) {break;} else {continue;}
+                                        } while (true);
+                                            Masa = Peso / GRAVEDAD;
+
+                                            cout << "\nDatos ingresados:\n";
+                                            cout << "Peso: " << Peso << " N\n";
+
+                                            cout << "\nRESULTADO\n";
+                                            cout << "La masa es: " << Masa << " kg\n";
+                                            presionarEnterParaContinuar();
                                         break;
                                     // VOLVER AL MENÚ PRINCIPAL
                                     case 3:
@@ -419,28 +439,7 @@ void planoHorizontal() {
                                         cout << "Error: inserte una opcion del 1 al 4\n";
                                         break;
                                 }
-                                if (Ecuacion == 1){
-                                    limpiarPantalla();
-                                    
-                                } else if (Ecuacion == 2){
-                                    limpiarPantalla();
-                                    cout << "CALCULANDO LA MASA\n\n";
-                                    cout << "Ingrese el peso (N): ";
-                                    cin >> Peso;
-
-                                    Masa = Peso / GRAVEDAD;
-
-                                    cout << "\nDatos ingresados:\n";
-                                    cout << "Peso: " << Peso << " N\n";
-
-                                    cout << "\nRESULTADO\n";
-                                    cout << "La masa es: " << Masa << " kg\n";
-                                    presionarEnterParaContinuar();
-                                } else {
-                                    cout << "\nOpcion no valida\n";
-                                }
                             } while (Ecuacion != 3);
-                            
                             break;
                         // CÁLCULO DE LA ACELERACIÓN - PLANO HORIZONTAL CUERPO EN MOVIMIENTO
                         case 4:

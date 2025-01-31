@@ -2,6 +2,7 @@
 #include <cmath>
 #include <cstdlib>
 #include <limits>
+#include <string>
 using namespace std;
 
 // CONSTANTE GRAVEDAD
@@ -13,9 +14,32 @@ double Valor, Resultado, Mayor_Cero;
 
 // PROCEDIMIENTOS MENÚS
 void menuPrincipal();
+void menuPlanoHorizontal();
+void menuCuerpoEnReposoPlanoHorizontal();
+void menuCuerpoEnMovimientoPlanoHorizontal();
 void planoHorizontal();
 void planoInclinado();
 void menuConvertidor();
+
+// FUNCIONES PARA CÁLCULOS - PLANO HORIZONTAL
+// Cuerpo en REPOSO
+double calcularPeso(double masa);
+void calcularYMostrarPeso();
+double calcularMasaCuerpoEnReposoPH(double peso);
+void calcularYMostrarMasaCuerpoEnReposoPH();
+void calcularYMostrarFuerzaNormalCuerpoEnReposoPH();
+// Cuerpo en MOVIMIENTO
+void calcularYMostrarFuerzaCuerpoEnMovimientoPH();
+void calcularYMostrarFuerzaNormalCuerpoEnMovimientoPH();
+double calcularMasaCuerpoEnMovimientoEcuacion1PH(double fuerza, double aceleracion, double coeficienteFriccion);
+void calcularYMostrarMasaCuerpoEnMovimientoEcuacion1PH();
+void calcularYMostrarMasaCuerpoEnMovimientoEcuacion2PH();
+void calcularYMostrarAceleracionCuerpoEnMovimientoPH();
+void calcularYMostrarFuerzaRozamientoCuerpoEnMovimientoEcuacion1PH();
+void calcularYMostrarFuerzaRozamientoCuerpoEnMovimientoEcuacion2PH();
+void calcularYMostrarCoeficienteFriccionCuerpoEnMovimientoEcuacion1PH();
+void calcularYMostrarCoeficienteFriccionCuerpoEnMovimientoEcuacion2PH();
+
 
 // PROCEDIMIENTOS CONVERSIONES DE UNIDADES
 void conversionFuerza();
@@ -113,12 +137,13 @@ bool validarMayorCero(double dato, string nombreDato){
     }
 }
 
-// Función para calcular el peso
+// FUNCIONES PARA CÁLCULOS DE UN CUERPO EN REPOSO EN EL PLANO HORIZONTAL //
+// Calcular el PESO de un cuerpo
 double calcularPeso(double masa) {
     return masa * GRAVEDAD;
 }
 
-// Función para calcular y mostrar el peso plano horizontal
+// Calcular y mostrar el PESO - PLANO HORIZONTAL
 void calcularYMostrarPeso() {
     double masa;
     do {
@@ -136,7 +161,350 @@ void calcularYMostrarPeso() {
     presionarEnterParaContinuar();
 }
 
+// Calcular la MASA de un cuerpo en REPOSO - PLANO HORIZONTAL
+double calcularMasaCuerpoEnReposoPH(double peso) {
+    return peso / GRAVEDAD;
+}
 
+// Calcular y mostrar la MASA de un cuerpo en REPOSO - PLANO HORIZONTAL
+void calcularYMostrarMasaCuerpoEnReposoPH() {
+    double peso;
+    do {
+        cout << "CALCULANDO LA MASA\n\n";
+        cout << "Ingrese el peso (N): ";
+        peso = leerNumero();
+    } while (!validarMayorCero(peso, "peso"));
+
+    double masa = calcularMasaCuerpoEnReposoPH(peso);
+
+    cout << "\nDatos ingresados:\n";
+    cout << "Peso: " << peso << " N\n";
+    cout << "\nRESULTADO\n";
+    cout << "La masa es: " << masa << " kg\n";
+    presionarEnterParaContinuar();
+}
+
+// Calcular y mostrar la FUERZA NORMAL de un cuerpo en REPOSO - PLANO HORIZONTAL
+void calcularYMostrarFuerzaNormalCuerpoEnReposoPH() {
+    double masa;
+    do {
+        cout << "CALCULANDO LA FUERZA NORMAL\n\n";
+        cout << "Ingrese la masa (kg): ";
+        masa = leerNumero();
+
+        if (validarMayorCero(masa, "masa")) {
+            double fuerzaNormal = masa * GRAVEDAD;
+
+            cout << "\nDatos ingresados:\n";
+            cout << "Masa: " << masa << " kg\n";
+            cout << "\nRESULTADO\n";
+            cout << "La fuerza normal es: " << fuerzaNormal << " N\n";
+            presionarEnterParaContinuar();
+            break;
+        }
+    } while (true);
+}
+
+// FUNCIONES PARA CÁLCULOS DE UN CUERPO EN MOVIMIENTO EN EL PLANO HORIZONTAL //
+// Calcular y mostrar la FUERZA de un cuerpo en MOVIMIENTO - PLANO HORIZONTAL
+void calcularYMostrarFuerzaCuerpoEnMovimientoPH() {
+    double masa, aceleracion, coeficienteFriccion;
+
+    // SOLICITAR Y VALIDAR LA MASA
+    do {
+        cout << "CALCULANDO LA FUERZA\n\n";
+        cout << "Ingrese la masa (kg): ";
+        masa = leerNumero();
+    } while (!validarMayorCero(masa, "masa"));
+
+    // SOLICITAR Y VALIDAR LA ACELERACIÓN
+    do {
+        cout << "Ingrese la aceleracion (m/s^2): ";
+        aceleracion = leerNumero();
+    } while (!validarMayorCero(aceleracion, "aceleracion"));
+
+    // SOLICITAR Y VALIDAR EL COEFICIENTE DE FRICCION
+    do {
+        cout << "Ingrese el coeficiente de friccion: ";
+        coeficienteFriccion = leerNumero();
+    } while (!validarMayorCero(coeficienteFriccion, "coeficiente de friccion"));
+
+    // CALCULAR LA FUERZA
+    double fuerza = masa * (aceleracion + coeficienteFriccion * GRAVEDAD);
+
+    // MOSTRAR RESULTADOS
+    cout << "\nDatos ingresados:\n";
+    cout << "Masa: " << masa << " kg\n";
+    cout << "Aceleracion: " << aceleracion << " m/s^2\n";
+    cout << "Coeficiente de friccion: " << coeficienteFriccion << endl;
+
+    cout << "\nRESULTADO\n";
+    cout << "La fuerza es: " << fuerza << " N\n";
+    presionarEnterParaContinuar();
+}
+
+// Calcular y mostrar la FUERZA NORMAL de un cuerpo en MOVIMIENTO - PLANO HORIZONTAL
+void calcularYMostrarFuerzaNormalCuerpoEnMovimientoPH() {
+    double masa;
+    do {
+        cout << "CALCULANDO LA FUERZA NORMAL\n\n";
+        cout << "Ingrese la masa (kg): ";
+        masa = leerNumero();
+
+        if (validarMayorCero(masa, "masa")) {
+            double fuerzaNormal = masa * GRAVEDAD;
+
+            cout << "\nDatos ingresados:\n";
+            cout << "Masa: " << masa << " kg\n";
+            cout << "\nRESULTADO\n";
+            cout << "La fuerza normal es: " << fuerzaNormal << " N\n";
+            presionarEnterParaContinuar();
+            break;
+        }
+    } while (true);
+}
+
+// Calcular la MASA usando la ECUACIÓN 1 de un cuerpo en MOVIMIENTO - PLANO HORIZONTAL
+double calcularMasaCuerpoEnMovimientoEcuacion1PH(double fuerza, double aceleracion, double coeficienteFriccion) {
+    return fuerza / (aceleracion + coeficienteFriccion * GRAVEDAD);
+}
+
+// Calcular y mostrar la MASA de un cuerpo en MOVIMIENTO usando la ECUACIÓN 1 - PLANO HORIZONTAL
+void calcularYMostrarMasaCuerpoEnMovimientoEcuacion1PH() {
+    double fuerza, aceleracion, coeficienteFriccion;
+
+    // SOLICITAR Y VALIDAR LA FUERZA
+    do {
+        cout << "CALCULANDO LA MASA\n\n";
+        cout << "Ingrese la fuerza (N): ";
+        fuerza = leerNumero();
+    } while (!validarMayorCero(fuerza, "fuerza"));
+
+    // SOLICITAR Y VALIDAR LA ACELERACIÓN
+    do {
+        cout << "Ingrese la aceleracion (m/s^2): ";
+        aceleracion = leerNumero();
+    } while (!validarMayorCero(aceleracion, "aceleracion"));
+
+    // SOLICITAR Y VALIDAR EL COEFICIENTE DE FRICCIÓN
+    do {
+        cout << "Ingrese el coeficiente de friccion, entre [0 y 1]: ";
+        coeficienteFriccion = leerNumero();
+        if (coeficienteFriccion <= 0 || coeficienteFriccion > 1) {
+            limpiarPantalla();
+            cout << "El coeficiente de friccion debe estar entre 0 y 1\n\n";
+        }
+    } while (coeficienteFriccion <= 0 || coeficienteFriccion > 1);
+
+    // CALCULAR LA MASA
+    double masa = calcularMasaCuerpoEnMovimientoEcuacion1PH(fuerza, aceleracion, coeficienteFriccion);
+
+    // MOSTRAR RESULTADOS
+    cout << "\nDatos ingresados:\n";
+    cout << "Fuerza: " << fuerza << " N\n";
+    cout << "Aceleracion: " << aceleracion << " m/s^2\n";
+    cout << "Coeficiente de friccion: " << coeficienteFriccion << endl;
+
+    cout << "\nRESULTADO\n";
+    cout << "La masa es: " << masa << " kg\n";
+    presionarEnterParaContinuar();
+}
+
+// Calcular la MASA usando la ECUACIÓN del cuerpo en reposo
+void calcularYMostrarMasaCuerpoEnMovimientoEcuacion2PH() {
+    double peso;
+
+    // SOLICITAR Y VALIDAR EL PESO
+    do {
+        cout << "CALCULANDO LA MASA\n\n";
+        cout << "Ingrese el peso (N): ";
+        peso = leerNumero();
+    } while (!validarMayorCero(peso, "peso"));
+
+    // CALCULAR LA MASA
+    double masa = calcularMasaCuerpoEnReposoPH(peso);
+
+    // MOSTRAR RESULTADOS
+    cout << "\nDatos ingresados:\n";
+    cout << "Peso: " << peso << " N\n";
+
+    cout << "\nRESULTADO\n";
+    cout << "La masa es: " << masa << " kg\n";
+    presionarEnterParaContinuar();
+}
+
+// Calcular y mostrar la ACELERACIÓN de un cuerpo en MOVIMIENTO - PLANO HORIZONTAL
+void calcularYMostrarAceleracionCuerpoEnMovimientoPH() {
+    double fuerza, coeficienteFriccion, masa;
+
+    // SOLICITAR Y VALIDAR FUERZA
+    do {
+        cout << "CALCULANDO LA ACELERACION\n\n";
+        cout << "Ingrese la fuerza (N): ";
+        fuerza = leerNumero();
+    } while (!validarMayorCero(fuerza, "fuerza"));
+
+    // SOLICITAR Y VALIDAR EL COEFICIENTE DE FRICCIÓN
+    do {
+        cout << "Ingrese el coeficiente de friccion: ";
+        coeficienteFriccion = leerNumero();
+    } while (!validarMayorCero(coeficienteFriccion, "coeficiente de friccion"));
+
+    // SOLICITAR Y VALIDAR MASA
+    do {
+        cout << "Ingrese la masa (kg): ";
+        masa = leerNumero();
+    } while (!validarMayorCero(masa, "masa"));
+
+    // CALCULAR LA ACELERACIÓN
+    double aceleracion = (fuerza - coeficienteFriccion * masa * GRAVEDAD) / masa;
+
+    // MOSTRAR RESULTADOS
+    cout << "\nDatos ingresados:\n";
+    cout << "Fuerza: " << fuerza << " N\n";
+    cout << "Coeficiente de friccion: " << coeficienteFriccion << endl;
+    cout << "Masa: " << masa << " kg\n";
+
+    cout << "\nRESULTADO\n";
+    cout << "La aceleracion es: " << aceleracion << " m/s^2\n";
+    presionarEnterParaContinuar();
+}
+
+// Calcular la FUERZA DE ROZAMIENTO usando la ECUACIÓN 1 (Fr = uN) - PLANO HORIZONTAL
+void calcularYMostrarFuerzaRozamientoCuerpoEnMovimientoEcuacion1PH() {
+    double coeficienteFriccion, fuerzaNormal;
+
+    // SOLICITAR Y VALIDAR EL COEFICIENTE DE FRICCIÓN
+    do {
+        cout << "CALCULANDO LA FUERZA DE ROZAMIENTO\n\n";
+        cout << "Ingrese el coeficiente de friccion: ";
+        coeficienteFriccion = leerNumero();
+    } while (!validarMayorCero(coeficienteFriccion, "coeficiente de friccion"));
+
+    // SOLICITAR Y VALIDAR LA FUERZA NORMAL
+    do {
+        cout << "Ingrese la fuerza normal (N): ";
+        fuerzaNormal = leerNumero();
+    } while (!validarMayorCero(fuerzaNormal, "fuerza normal"));
+
+    // CALCULAR LA FUERZA DE ROZAMIENTO
+    double fuerzaRozamiento = coeficienteFriccion * fuerzaNormal;
+
+    // MOSTRAR RESULTADOS
+    cout << "\nDatos ingresados:\n";
+    cout << "Coeficiente de friccion: " << coeficienteFriccion << endl;
+    cout << "Fuerza normal: " << fuerzaNormal << " N\n";
+
+    cout << "\nRESULTADO\n";
+    cout << "La fuerza de rozamiento es: " << fuerzaRozamiento << " N\n";
+    presionarEnterParaContinuar();
+}
+
+// Calcular la FUERZA DE ROZAMIENTO usando la ecuación 2 (Fr = F - ma) - PLANO HORIZONTAL
+void calcularYMostrarFuerzaRozamientoCuerpoEnMovimientoEcuacion2PH() {
+    double fuerza, masa, aceleracion;
+
+    // SOLICITAR Y VALIDAR LA FUERZA
+    do {
+        cout << "CALCULANDO LA FUERZA DE ROZAMIENTO\n\n";
+        cout << "Ingrese la fuerza (N): ";
+        fuerza = leerNumero();
+    } while (!validarMayorCero(fuerza, "fuerza"));
+
+    // SOLICITAR Y VALIDAR LA MASA
+    do {
+        cout << "Ingrese la masa (kg): ";
+        masa = leerNumero();
+    } while (!validarMayorCero(masa, "masa"));
+
+    // SOLICITAR Y VALIDAR LA ACELERACIÓN
+    do {
+        cout << "Ingrese la aceleracion (m/s^2): ";
+        aceleracion = leerNumero();
+    } while (!validarMayorCero(aceleracion, "aceleracion"));
+
+    // CALCULAR LA FUERZA DE ROZAMIENTO
+    double fuerzaRozamiento = fuerza - masa * aceleracion;
+
+    // MOSTRAR RESULTADOS
+    cout << "\nDatos ingresados:\n";
+    cout << "Fuerza: " << fuerza << " N\n";
+    cout << "Masa: " << masa << " kg\n";
+    cout << "Aceleracion: " << aceleracion << " m/s^2\n";
+
+    cout << "\nRESULTADO\n";
+    cout << "La fuerza de rozamiento es: " << fuerzaRozamiento << " N\n";
+    presionarEnterParaContinuar();
+}
+
+// Función para calcular el coeficiente de fricción usando la ecuación 1 (u = Fr / N)
+void calcularYMostrarCoeficienteFriccionCuerpoEnMovimientoEcuacion1PH() {
+    double fuerzaRozamiento, fuerzaNormal;
+
+    // Solicitar y validar la fuerza de rozamiento
+    do {
+        cout << "CALCULANDO EL COEFICIENTE DE FRICCION\n\n";
+        cout << "Ingrese la fuerza de rozamiento (N): ";
+        fuerzaRozamiento = leerNumero();
+    } while (!validarMayorCero(fuerzaRozamiento, "fuerza de rozamiento"));
+
+    // Solicitar y validar la fuerza normal
+    do {
+        cout << "Ingrese la fuerza normal (N): ";
+        fuerzaNormal = leerNumero();
+    } while (!validarMayorCero(fuerzaNormal, "fuerza normal"));
+
+    // Calcular el coeficiente de fricción
+    double coeficienteFriccion = fuerzaRozamiento / fuerzaNormal;
+
+    // Mostrar resultados
+    cout << "\nDatos ingresados:\n";
+    cout << "Fuerza de rozamiento: " << fuerzaRozamiento << " N\n";
+    cout << "Fuerza normal: " << fuerzaNormal << " N\n";
+
+    cout << "\nRESULTADO\n";
+    cout << "El coeficiente de friccion es: " << coeficienteFriccion << endl;
+    presionarEnterParaContinuar();
+}
+
+// Función para calcular el coeficiente de fricción usando la ecuación 2 (u = (F - ma) / (mg))
+void calcularYMostrarCoeficienteFriccionCuerpoEnMovimientoEcuacion2PH() {
+    double fuerza, masa, aceleracion;
+
+    // Solicitar y validar la fuerza
+    do {
+        cout << "CALCULANDO EL COEFICIENTE DE FRICCION\n\n";
+        cout << "Ingrese la fuerza (N): ";
+        fuerza = leerNumero();
+    } while (!validarMayorCero(fuerza, "fuerza"));
+
+    // Solicitar y validar la masa
+    do {
+        cout << "Ingrese la masa (kg): ";
+        masa = leerNumero();
+    } while (!validarMayorCero(masa, "masa"));
+
+    // Solicitar y validar la aceleración
+    do {
+        cout << "Ingrese la aceleracion (m/s^2): ";
+        aceleracion = leerNumero();
+    } while (!validarMayorCero(aceleracion, "aceleracion"));
+
+    // Calcular el coeficiente de fricción
+    double coeficienteFriccion = (fuerza - masa * aceleracion) / (masa * GRAVEDAD);
+
+    // Mostrar resultados
+    cout << "\nDatos ingresados:\n";
+    cout << "Fuerza: " << fuerza << " N\n";
+    cout << "Masa: " << masa << " kg\n";
+    cout << "Aceleracion: " << aceleracion << " m/s^2\n";
+
+    cout << "\nRESULTADO\n";
+    cout << "El coeficiente de friccion es: " << coeficienteFriccion << endl;
+    presionarEnterParaContinuar();
+}
+
+// MENÚS
 // MENÚ PRINCIPAL DEL PROGRAMA
 void menuPrincipal() {
     do {
@@ -150,490 +518,302 @@ void menuPrincipal() {
         Opcion = leerOpcion();
 
         switch (Opcion) {
-            case 1:
-                planoHorizontal();
+            case 1: // MUESTRA EL MENÚ DEL PLANO HORIZONTAL
+                menuPlanoHorizontal();
                 break;
-            case 2:
+            case 2: // MUESTRA EL MENÚ DEL PLANO INCLINADO
                 planoInclinado();
                 break;
-            case 3:
+            case 3: // MUESTRA EL MENÚ DE CONVERSIONES
                 menuConvertidor();
                 break;
-            case 4:
+            case 4: // SALIR DEL PROGRAMA
                 cout << "Saliendo del programa...\n";
                 break;
-            default:
+            default: // MENSAJE DE ERROR POR DEFECTO
                 limpiarPantalla();
-                cout << "Error, inserte una opcion del 1 al 4\n";
+                cout << "Error: inserte una opcion del 1 al 4\n";
         }
     } while (Opcion != 4);
 }
 
-// PROBLEMAS EN PLANO HORIZONTAL
-void planoHorizontal() {
+// Menú plano horizontal
+void menuPlanoHorizontal() {
     limpiarPantalla();
-    double Masa = 0, Fuerza = 0, Peso = 0, Aceleracion = 0, Fuerza_Rozamiento = 0, Fuerza_Normal = 0, Coef_Friccion = 0;
+    int opcion;
     do {
-        // MENÚ PLANO HORIZONTAL
         cout << "\n====== PLANO HORIZONTAL ======\n";
         cout << "1. EN REPOSO\n";
         cout << "2. EN MOVIMIENTO\n";
         cout << "3. Volver\n";
         cout << "4. Salir\n";
         cout << "\nSeleccione el estado del cuerpo: ";
-        Opcion = leerOpcion();
+        opcion = leerOpcion();
 
-        switch (Opcion){
-            // CUERPO EN REPOSO - PLANO HORIZONTAL
-            case 1:
-                limpiarPantalla();
-                do {
-                    cout << "\nPLANO HORIZONTAL: CUERPO EN REPOSO\n";
-                    cout << "\nPuede calcular:\n";
-                    cout << "1. Peso\n";
-                    cout << "2. Masa\n";
-                    cout << "3. Fuerza normal\n";
-                    cout << "4. Volver\n";
-                    cout << "5. Salir\n";
-                    cout << "\nSeleccione lo que desea calcular: ";
-                    Opcion = leerOpcion();
-
-                    switch (Opcion) {
-                        // CÁLCULO DEL PESO - PLANO HORIZONTAL CUERPO EN REPOSO
-                        case 1:
-                            limpiarPantalla();
-                            calcularYMostrarPeso();
-                            break;
-                        // CÁLCULO DE LA MASA - PLANO HORIZONTAL CUERPO EN REPOSO
-                        case 2:
-                            limpiarPantalla();
-
-                            do {
-                                cout << "CALCULANDO LA MASA\n\n";
-                                cout << "Ingrese el peso (N): ";
-                                Peso = leerNumero();
-
-                                // VALIDAR PESO MAYOR A 0
-                                if (validarMayorCero(Peso, "peso")) {
-                                    Masa = Peso / GRAVEDAD;
-
-                                    cout << "\nDatos ingresados:\n";
-                                    cout << "Peso: " << Peso << " N\n";
-                                    cout << "\nRESULTADO\n";
-                                    cout << "La masa es: " << Masa << " kg\n";
-                                    presionarEnterParaContinuar();
-                                    break;
-                                }
-                                
-                            } while (true);
-                            
-                            break;
-                        // CÁLCULO DE LA FUERZA NORMAL - PLANO HORIZONTAL CUERPO EN REPOSO
-                        case 3:
-                            limpiarPantalla();
-
-                            do {
-                                cout << "CALCULANDO LA FUERZA NORMAL\n\n";
-                                cout << "Ingrese la masa (kg): ";
-                                Masa = leerNumero();
-
-                                if (validarMayorCero(Masa, "masa")) {
-                                    Fuerza_Normal = Masa * GRAVEDAD;
-
-                                    cout << "\nDatos ingresados:\n";
-                                    cout << "Masa: " << Masa << " kg\n";
-                                    cout << "\nRESULTADO\n";
-                                    cout << "La fuerza normal es: " << Fuerza_Normal << " N\n";
-                                    presionarEnterParaContinuar();
-                                    break;
-                                }
-
-                            } while (true);
-                            
-                            break;
-                        // VOLVER AL MENÚ PRINCIPAL
-                        case 4:
-                            limpiarPantalla();
-                            break;
-                        // SALIR DEL PROGRAMA
-                        case 5:
-                            cout << "Saliendo del programa...\n";
-                            exit(0);
-                            break;
-                        default:
-                            limpiarPantalla();
-                            cout << "Error: inserte una opcion del 1 al 5\n";
-                            break;
-                    }
-                
-                } while (Opcion != 4);
+        switch (opcion) {
+            case 1: // MUESTRA EL MENÚ DEL CUERPO EN REPOSO - PLANO HORIZONTAL
+                menuCuerpoEnReposoPlanoHorizontal();
                 break;
-
-            // CUERPO EN MOVIMIENTO - PLANO HORIZONTAL
-            case 2:
-                limpiarPantalla();
-                do {
-                    cout << "\nPLANO HORIZONTAL: CUERPO EN MOVIMIENTO\n";
-                    cout << "\nPuede calcular:\n";
-                    cout << "1. Fuerza\n";
-                    cout << "2. Fuerza Normal\n";
-                    cout << "3. Masa\n";
-                    cout << "4. Aceleracion\n";
-                    cout << "5. Peso\n";
-                    cout << "6. Fuerza de rozamiento\n";
-                    cout << "7. Coeficiente de friccion\n";
-                    cout << "8. Volver\n";
-                    cout << "9. Salir\n";
-                    cout << "\nSeleccione lo que desea calcular: ";
-                    Opcion = leerOpcion();
-
-                    switch (Opcion) {
-                        // CÁLCULO DE LA FUERZA - PLANO HORIZONTAL CUERPO EN MOVIMIENTO
-                        case 1:
-                            limpiarPantalla();
-
-                            do {
-                                cout << "CALCULANDO LA FUERZA\n\n";
-                                cout << "Ingrese la masa (kg): ";
-                                Masa = leerNumero();
-                                if (validarMayorCero(Masa, "masa")) {break;} else {continue;}
-                            } while (true);
-
-                            do {
-                                cout << "Ingrese la aceleracion (m/s^2): ";
-                                Aceleracion = leerNumero();
-                                if (validarMayorCero(Aceleracion, "aceleracion")) {break;} else {continue;}
-                            } while (true);
-                                
-                            do {
-                                cout << "Ingrese coeficiente de friccion: ";
-                                Coef_Friccion = leerNumero();
-                                if (validarMayorCero(Coef_Friccion, "coeficiente de friccion")) {break;} else {continue;}
-                            } while (true);
-
-                                Fuerza = Masa * (Aceleracion + Coef_Friccion * GRAVEDAD);
-
-                                cout << "\nDatos ingresados:\n";
-                                cout << "Masa: " << Masa << " kg\n";
-                                cout << "Aceleracion: " << Aceleracion << " m/s^2\n";
-                                cout << "Coeficiente de friccion: " << Coef_Friccion << endl;
-
-                                cout << "\nRESULTADO\n";
-                                cout << "La fuerza es: " << Fuerza << " N\n";
-                                presionarEnterParaContinuar();
-                            
-                            break;
-                        // CÁLCULO DE LA FUERZA NORMAL - PLANO HORIZONTAL CUERPO EN MOVIMIENTO
-                        case 2:
-                            limpiarPantalla();
-
-                            do {
-                                cout << "CALCULANDO LA FUERZA NORMAL\n\n";
-                                cout << "Ingrese la masa (kg): ";
-                                Masa = leerNumero();
-
-                                if (validarMayorCero(Masa, "masa")) {
-                                    Fuerza_Normal = Masa * GRAVEDAD;
-
-                                    cout << "\nDatos ingresados:\n";
-                                    cout << "Masa: " << Masa << " kg\n";
-
-                                    cout << "\nRESULTADO\n";
-                                    cout << "La fuerza normal es: " << Fuerza_Normal << " N\n";
-                                    presionarEnterParaContinuar();
-                                    break;
-                                }
-                                
-                            } while (true);
-                            
-                            break;
-                        // CÁLCULO DE LA MASA - PLANO HORIZONTAL CUERPO EN MOVIMIENTO
-                        case 3:
-                            limpiarPantalla();
-
-                            do {
-                                cout << "CALCULANDO LA MASA\n\n";
-                                cout << "Seleccione la ecuacion a utilizar segun los datos que disponga\n";
-                                cout << "          F\n";
-                                cout << "1. m = --------\n";
-                                cout << "        a + ug\n\n";
-                                cout << "           W\n";
-                                cout << "2. m = --------\n";
-                                cout << "           g\n";
-                                cout << "3. Volver\n";
-                                cout << "4. Salir\n\n";
-                                cout << "Donde:\n";
-                                cout << "m: masa (kg)\n";
-                                cout << "F: fuerza (N)\n";
-                                cout << "W: Peso (N)\n";
-                                cout << "a: aceleracion (m/s^2)\n";
-                                cout << "u: coeficiente de friccion\n";
-                                cout << "g: gravedad (m/s^2)\n\n";
-                                cout << "Seleccione la ecuacion: ";
-                                Ecuacion = leerOpcion();
-
-                                switch (Ecuacion){
-                                    // SE CALCULA LA MASA CON LA ECUACIÓN 1
-                                    case 1:
-                                        limpiarPantalla();
-                                        
-                                        do {
-                                            cout << "CALCULANDO LA MASA\n\n";
-                                            cout << "Ingrese la fuerza (N): ";
-                                            Fuerza = leerNumero();
-                                            if (validarMayorCero(Fuerza, "fuerza")) {break;} else {continue;}
-                                        } while(true);
-                                        
-                                        do {
-                                            cout << "Ingrese la aceleracion (m/s^2): ";
-                                            Aceleracion = leerNumero();
-                                            if (validarMayorCero(Aceleracion, "aceleracion")) {break;} else {continue;}
-                                        } while (true);
-
-                                        do {
-                                            cout << "Ingrese el coeficiente de friccion, entre [0 y 1]: ";
-                                            Coef_Friccion = leerNumero();
-                                            if ((Coef_Friccion > 0 ) && (Coef_Friccion <= 1)) {break;} else {limpiarPantalla(); cout << "El coeficiente de friccion debe estar entre 0 y 1\n\n"; continue;}
-                                        } while (true);
-
-                                        Masa = Fuerza / (Aceleracion + Coef_Friccion * GRAVEDAD);
-
-                                        cout << "\nDatos ingresados:\n";
-                                        cout << "Fuerza: " << Fuerza << " N\n";
-                                        cout << "Aceleracion: " << Aceleracion << " m/s^2\n";
-                                        cout << "Coeficiente de friccion: " << Coef_Friccion << endl;
-
-                                        cout << "\nRESULTADO\n";
-                                        cout << "La masa es: " << Masa << " kg\n";
-                                        presionarEnterParaContinuar();
-                                        break;
-                                    // SE CALCULA LA MASA CON LA ECUACIÓN 2
-                                    case 2:
-                                        limpiarPantalla();
-                                        do{
-                                            cout << "CALCULANDO LA MASA\n\n";
-                                            cout << "Ingrese el peso (N): ";
-                                            Peso = leerNumero();
-                                            if (validarMayorCero(Peso, "peso")) {break;} else {continue;}
-                                        } while (true);
-                                            Masa = Peso / GRAVEDAD;
-
-                                            cout << "\nDatos ingresados:\n";
-                                            cout << "Peso: " << Peso << " N\n";
-
-                                            cout << "\nRESULTADO\n";
-                                            cout << "La masa es: " << Masa << " kg\n";
-                                            presionarEnterParaContinuar();
-                                        break;
-                                    // VOLVER AL MENÚ PRINCIPAL
-                                    case 3:
-                                        limpiarPantalla();
-                                        break;
-                                    // SALIR DEL PROGRAMA
-                                    case 4:
-                                        cout << "Saliendo del programa...\n";
-                                        exit(0);
-                                        break;
-                                    default:
-                                        limpiarPantalla();
-                                        cout << "Error: inserte una opcion del 1 al 4\n";
-                                        break;
-                                }
-                            } while (Ecuacion != 3);
-                            break;
-                        // CÁLCULO DE LA ACELERACIÓN - PLANO HORIZONTAL CUERPO EN MOVIMIENTO
-                        case 4:
-                            limpiarPantalla();
-                            cout << "CALCULANDO LA ACELERACION\n\n";
-                            cout << "Ingrese la fuerza (N): ";
-                            cin >> Fuerza;
-                            cout << "Ingrese el coeficiente de friccion: ";
-                            cin >> Coef_Friccion;
-                            cout << "Ingrese la masa (kg): ";
-                            cin >> Masa;
-
-                            Aceleracion = (Fuerza - Coef_Friccion * Masa * GRAVEDAD) / Masa;
-
-                            cout << "\nDatos ingresados:\n";
-                            cout << "Fuerza: " << Fuerza << " N\n";
-                            cout << "Coeficiente de friccion: " << Coef_Friccion << endl;
-                            cout << "Masa: " << Masa << " kg\n";
-
-                            cout << "\nRESULTADO\n";
-                            cout << "La aceleracion es: " << Aceleracion << " m/s^2\n";
-                            presionarEnterParaContinuar();
-                            break;
-                        // CÁLCULO DEL PESO - PLANO HORIZONTAL CUERPO EN MOVIMIENTO
-                        case 5:
-                            limpiarPantalla();
-                            cout << "CALCULANDO EL PESO\n\n";
-                            cout << "Ingrese la masa: ";
-                            cin >> Masa;
-
-                            Peso = Masa * GRAVEDAD;
-
-                            cout << "\nDatos ingresados:\n";
-                            cout << "Masa: " << Masa << " kg\n";
-
-                            cout << "\nRESULTADO\n";
-                            cout << "El peso es: " << Peso << " N\n";
-                            presionarEnterParaContinuar();
-                            break;
-                        // CÁLCULO DE LA FUERZA DE FRICCIÓN - PLANO HORIZONTAL CUERPO EN MOVIMIENTO
-                        case 6:
-                            limpiarPantalla();
-                            cout << "CALCULANDO LA FUERZA DE ROZAMIENTO\n\n";
-                            cout << "Seleccione la ecuacion a utilizar segun los datos que disponga\n";
-                            cout << "1. Fr = uN\n";
-                            cout << "2. Fr = F - ma\n\n";
-                            cout << "Donde:\n";
-                            cout << "Fr: fuerza de rozamiento (N)\n";
-                            cout << "u: coeficiente de friccion\n";
-                            cout << "N: fuerza normal (N)\n";
-                            cout << "F: fuerza (N)\n";
-                            cout << "m: masa (kg)\n";
-                            cout << "a: aceleracion (m/s^2)\n\n";
-                            cout << "Seleccione la ecuacion: ";
-                            cin >> Ecuacion;
-
-                            if (Ecuacion == 1){
-                                limpiarPantalla();
-                                cout << "CALCULANDO LA FUERZA DE ROZAMIENTO\n\n";
-                                cout << "Ingrese el coeficiente de friccion: ";
-                                cin >> Coef_Friccion;
-                                cout << "Ingrese la fuerza normal (N): ";
-                                cin >> Fuerza_Normal;
-
-                                Fuerza_Rozamiento = Coef_Friccion * Fuerza_Normal;
-
-                                cout << "\nDatos ingresados:\n";
-                                cout << "Coeficiente de friccion: " << Coef_Friccion << endl;
-                                cout << "Fuerza normal: " << Fuerza_Normal << " N\n";
-
-                                cout << "\nRESULTADO\n";
-                                cout << "La fuerza de rozamiento es: " << Fuerza_Rozamiento << " N\n";
-                                presionarEnterParaContinuar();
-                            } else if (Ecuacion == 2){
-                                limpiarPantalla();
-                                cout << "CALCULANDO LA FUERZA DE ROZAMIENTO\n\n";
-                                cout << "Ingrese la fuerza (N): ";
-                                cin >> Fuerza;
-                                cout << "Ingrese la masa (kg): ";
-                                cin >> Masa;
-                                cout << "Ingrese la aceleracion (m/s^2): ";
-                                cin >> Aceleracion;
-
-                                Fuerza_Rozamiento = Fuerza - Masa * Aceleracion;
-
-                                cout << "\nDatos ingresados:\n";
-                                cout << "Fuerza: " << Fuerza << " N\n";
-                                cout << "Masa: " << Masa << " kg\n";
-                                cout << "Aceleracion: " << Aceleracion << " m/s^2\n";
-
-                                cout << "\nRESULTADO\n";
-                                cout << "La fuerza de rozamiento es: " << Fuerza_Rozamiento << " N\n";
-                                presionarEnterParaContinuar();
-                            } else {
-                                cout << "Opcion no valida\n";
-                            }
-                            break;
-                        // CÁLCULO DEL COEFICIENTE DE FRICCIÓN - PLANO HORIZONTAL CUERPO EN MOVIMIENTO
-                        case 7:
-                            limpiarPantalla();
-                            cout << "CALCULANDO EL COEFICIENTE DE FRICCION\n\n";
-                            cout << "Seleccione la ecuacion a utilizar segun los datos que disponga\n";
-                            cout << "          Fr\n";
-                            cout << "1. u = --------\n";
-                            cout << "          N\n\n";
-                            cout << "        F - ma\n";
-                            cout << "2. u = --------\n";
-                            cout << "          mg\n\n";
-                            cout << "Donde: \n";
-                            cout << "u: coeficiente de friccion\n";
-                            cout << "Fr: fuerza de rozamiento (N)\n";
-                            cout << "N: fuerza normal (N)\n";
-                            cout << "F: fuerza (N)\n";
-                            cout << "m: masa (kg)\n";
-                            cout << "a: aceleracion (m/s^2)\n";
-                            cout << "g: gravedad (m/s^2)\n\n";
-                            cout << "Seleccione la ecuacion: ";
-                            cin >> Ecuacion;
-
-                            if(Ecuacion == 1){
-                                limpiarPantalla();
-                                cout << "CALCULANDO EL COEFICIENTE DE FRICCION\n\n";
-                                cout << "Ingrese la fuerza de rozamiento (N): ";
-                                cin >> Fuerza_Rozamiento;
-                                cout << "Ingrese la fuerza normal (N): ";
-                                cin >> Fuerza_Normal;
-
-                                Coef_Friccion = Fuerza_Rozamiento / Fuerza_Normal;
-
-                                cout << "\nDatos ingresados:\n";
-                                cout << "Fuerza de rozamiento: " << Fuerza_Rozamiento << " N\n";
-                                cout << "Fuerza normal: " << Fuerza_Normal << " N\n";
-
-                                cout << "\nRESULTADO\n";
-                                cout << "El coeficiente de friccion es: " << Coef_Friccion << endl;
-                                presionarEnterParaContinuar();
-                            } else if(Ecuacion == 2){
-                                limpiarPantalla();
-                                cout << "CALCULANDO EL COEFICIENTE DE FRICCION\n\n";
-                                cout << "Ingrese la fuerza (N): ";
-                                cin >> Fuerza;
-                                cout << "Ingrese la masa (kg): ";
-                                cin >> Masa;
-                                cout << "Ingrese la aceleracion (m/s^2): ";
-                                cin >> Aceleracion;
-
-                                Coef_Friccion = (Fuerza - Masa * Aceleracion) / (Masa * GRAVEDAD);
-
-                                cout << "\nDatos ingresados:\n";
-                                cout << "Fuerza: " << Fuerza << " N\n";
-                                cout << "Masa: " << Masa << " kg\n";
-                                cout << "Aceleracion: " << Aceleracion << " m/s^2\n";
-
-                                cout << "\nRESULTADO\n";
-                                cout << "El coeficiente de friccion es: " << Coef_Friccion << endl;
-                                presionarEnterParaContinuar();
-                            } else {
-                                cout << "Opcion no valida\n";
-                            }
-                            break;
-                        // VOLVER AL MENÚ ANTERIOR
-                        case 8:
-                            limpiarPantalla();
-                            break;
-                        // SALIR DEL PROGRAMA
-                        case 9:
-                            cout << "Saliendo del programa...\n";
-                            exit(0);
-                            break;
-                        default:
-                            limpiarPantalla();
-                            cout << "Error, inserte una opcion del 1 al 9\n";
-                            break;
-                    }
-
-                } while (Opcion != 8);
+            case 2: // MUESTRA EL MENÚ DEL CUERPO EN MOVIMIENTO - PLANO HORIZONTAL
+                menuCuerpoEnMovimientoPlanoHorizontal();
                 break;
-            // VOLVER AL MENÚ ANTERIOR
-            case 3:
+            case 3: // VOLVER AL MENÚ PRINCIPAL
                 limpiarPantalla();
                 break;
-            // SALIR DEL PROGRAMA
-            case 4:
+            case 4: // SALIR DEL PROGRAMA
                 cout << "Saliendo del programa...\n";
                 exit(0);
-                break;
-            default:
+            default: // MENSAJE DE ERROR POR DEFECTO
                 limpiarPantalla();
-                cout << "Error, inserte una opcion del 1 al 4\n";
+                cout << "Error: inserte una opcion del 1 al 4\n";
                 break;
         }
-
-    } while (Opcion != 3);
+    } while (opcion != 3);
 }
+
+// Menú para cuerpo en reposo
+void menuCuerpoEnReposoPlanoHorizontal() {
+    int opcion;
+    do {
+        cout << "\nPLANO HORIZONTAL: CUERPO EN REPOSO\n";
+        cout << "\nPuede calcular:\n";
+        cout << "1. Peso\n";
+        cout << "2. Masa\n";
+        cout << "3. Fuerza normal\n";
+        cout << "4. Volver\n";
+        cout << "5. Salir\n";
+        cout << "\nSeleccione lo que desea calcular: ";
+        opcion = leerOpcion();
+
+        switch (opcion) {
+            case 1: // CALCULA Y MUESTRA EL PESO DE UN CUERPO EN REPOSO - PLANO HORIZONTAL
+                calcularYMostrarPeso();
+                break;
+            case 2: // CALCULA Y MUESTRA LA MASA DE UN CUERPO EN REPOSO - PLANO HORIZONTAL
+                calcularYMostrarMasaCuerpoEnReposoPH();
+                break;
+            case 3: // CALCULA Y MUESTRA LA FUERZA NORMAL DE UN CUERPO EN REPOSO - PLANO HORIZONTAL
+                calcularYMostrarFuerzaNormalCuerpoEnReposoPH();
+                break;
+            case 4: // VOLVER AL MENÚ ANTERIOR
+                limpiarPantalla();
+                break;
+            case 5: // SALIR DEL PROGRAMA
+                cout << "Saliendo del programa...\n";
+                exit(0);
+            default: // MENSAJE DE ERROR POR DEFECTO
+                limpiarPantalla();
+                cout << "Error: inserte una opcion del 1 al 5\n";
+                break;
+        }
+    } while (opcion != 4);
+}
+
+// Menú para cuerpo en movimiento
+void menuCuerpoEnMovimientoPlanoHorizontal() {
+    int opcion;
+    do {
+        cout << "\nPLANO HORIZONTAL: CUERPO EN MOVIMIENTO\n";
+        cout << "\nPuede calcular:\n";
+        cout << "1. Fuerza\n";
+        cout << "2. Fuerza Normal\n";
+        cout << "3. Masa\n";
+        cout << "4. Aceleracion\n";
+        cout << "5. Peso\n";
+        cout << "6. Fuerza de rozamiento\n";
+        cout << "7. Coeficiente de friccion\n";
+        cout << "8. Volver\n";
+        cout << "9. Salir\n";
+        cout << "\nSeleccione lo que desea calcular: ";
+        opcion = leerOpcion();
+
+        switch (opcion) {
+            case 1: // CALCULA Y MUESTRA LA FUERZA DE UN CUERPO EN MOVIMIENTO - PLANO HORIZONTAL
+                limpiarPantalla();
+                calcularYMostrarFuerzaCuerpoEnMovimientoPH();
+                break;
+            case 2: // CALCULA Y MUESTRA LA FUERZA NORMAL DE UN CUERPO EN MOVIMIENTO - PLANO HORIZONTAL
+                limpiarPantalla();
+                calcularYMostrarFuerzaNormalCuerpoEnMovimientoPH();
+                break;
+            case 3: // CALCULA Y MUESTRA LA MASA DE UN CUERPO EN MOVIMIENTO - PLANO HORIZONTAL
+                limpiarPantalla();
+                do {
+                    cout << "CALCULANDO LA MASA\n\n";
+                    cout << "Seleccione la ecuacion a utilizar segun los datos que disponga\n";
+                    cout << "          F\n";
+                    cout << "1. m = --------\n";
+                    cout << "        a + ug\n\n";
+                    cout << "           W\n";
+                    cout << "2. m = --------\n";
+                    cout << "           g\n";
+                    cout << "3. Volver\n";
+                    cout << "4. Salir\n\n";
+                    cout << "Donde:\n";
+                    cout << "m: masa (kg)\n";
+                    cout << "F: fuerza (N)\n";
+                    cout << "W: Peso (N)\n";
+                    cout << "a: aceleracion (m/s^2)\n";
+                    cout << "u: coeficiente de friccion\n";
+                    cout << "g: gravedad (m/s^2)\n\n";
+                    cout << "Seleccione la ecuacion: ";
+                    Ecuacion = leerOpcion();
+
+                    switch (Ecuacion){
+                        // SE CALCULA LA MASA CON LA ECUACIÓN 1
+                        case 1:
+                            limpiarPantalla();
+                            calcularYMostrarMasaCuerpoEnMovimientoEcuacion1PH();
+                            presionarEnterParaContinuar();
+                            break;
+                        // SE CALCULA LA MASA CON LA ECUACIÓN 2
+                        case 2:
+                            limpiarPantalla();
+                            calcularYMostrarMasaCuerpoEnMovimientoEcuacion2PH();
+                            presionarEnterParaContinuar();
+                            break;
+                        // VOLVER AL MENÚ PRINCIPAL
+                        case 3:
+                            limpiarPantalla();
+                            break;
+                        // SALIR DEL PROGRAMA
+                        case 4:
+                            cout << "Saliendo del programa...\n";
+                            exit(0);
+                            break;
+                        default:
+                            limpiarPantalla();
+                            cout << "Error: inserte una opcion del 1 al 4\n";
+                            break;
+                    }
+                } while (Ecuacion != 3);
+                break;
+            case 4: // CALCULA Y MUESTRA LA ACELERACIÓN DE UN CUERPO EN MOVIMIENTO - PLANO HORIZONTAL
+                limpiarPantalla();
+                calcularYMostrarAceleracionCuerpoEnMovimientoPH();
+                break;
+            case 5: // CALCULA Y MUESTRA EL PESO DE UN CUERPO EN MOVIMIENTO - PLANO HORIZONTAL
+                limpiarPantalla();
+                calcularYMostrarPeso();
+                break;
+            case 6: // CALCULA Y MUESTRA LA FUERZA DE ROZAMIENTO DE UN CUERPO EN MOVIMIENTO - PLANO HORIZONTAL
+                limpiarPantalla();
+                do {
+                    cout << "CALCULANDO LA FUERZA DE ROZAMIENTO\n\n";
+                    cout << "Seleccione la ecuacion a utilizar segun los datos que disponga\n";
+                    cout << "1. Fr = uN\n";
+                    cout << "2. Fr = F - ma\n";
+                    cout << "3. Volver\n";
+                    cout << "4. Salir\n\n";
+                    cout << "Donde:\n";
+                    cout << "Fr: fuerza de rozamiento (N)\n";
+                    cout << "u: coeficiente de friccion\n";
+                    cout << "N: fuerza normal (N)\n";
+                    cout << "F: fuerza (N)\n";
+                    cout << "m: masa (kg)\n";
+                    cout << "a: aceleracion (m/s^2)\n\n";
+                    cout << "Seleccione la ecuacion: ";
+                    Ecuacion = leerOpcion();
+
+                    switch (Ecuacion) {
+                        case 1: // SE CALCULA LA FUERZA DE ROZAMIENTO CON LA ECUACIÓN 1
+                            limpiarPantalla();
+                            calcularYMostrarFuerzaRozamientoCuerpoEnMovimientoEcuacion1PH();
+                            break;
+                        case 2: // SE CALCULA LA FUERZA DE ROZAMIENTO CON LA ECUACIÓN 2
+                            limpiarPantalla();
+                            calcularYMostrarFuerzaRozamientoCuerpoEnMovimientoEcuacion2PH();
+                            break;
+                        case 3: // VOLVER AL MENÚ ANTERIOR
+                            limpiarPantalla();
+                            break;
+                        case 4: // SALIR DEL PROGRAMA
+                            cout << "Saliendo del programa...\n";
+                            exit(0);
+                            break;
+                        default: // MENSAJE DE ERROR POR DEFECTO
+                            limpiarPantalla();
+                            cout << "Error: inserte una opcion del 1 al 4\n";
+                            break;
+                    }
+                } while (Ecuacion != 3);
+                break;
+            case 7: // CALCULA Y MUESTRA EL COEFICIENTE DE FRICCIÓN DE UN CUERPO EN MOVIMIENTO - PLANO HORIZONTAL
+                limpiarPantalla();
+                do {
+                    limpiarPantalla();
+                    cout << "CALCULANDO EL COEFICIENTE DE FRICCION\n\n";
+                    cout << "Seleccione la ecuacion a utilizar segun los datos que disponga\n";
+                    cout << "          Fr\n";
+                    cout << "1. u = --------\n";
+                    cout << "          N\n\n";
+                    cout << "        F - ma\n";
+                    cout << "2. u = --------\n";
+                    cout << "          mg\n\n";
+                    cout << "3. Volver\n";
+                    cout << "4. Salir\n\n";
+                    cout << "Donde: \n";
+                    cout << "u: coeficiente de friccion\n";
+                    cout << "Fr: fuerza de rozamiento (N)\n";
+                    cout << "N: fuerza normal (N)\n";
+                    cout << "F: fuerza (N)\n";
+                    cout << "m: masa (kg)\n";
+                    cout << "a: aceleracion (m/s^2)\n";
+                    cout << "g: gravedad (m/s^2)\n\n";
+                    cout << "Seleccione la ecuacion: ";
+                    Ecuacion = leerOpcion();
+
+                    switch (Ecuacion) {
+                        case 1: // SE CALCULA EL COEFICIENTE DE FRICCIÓN CON LA ECUACIÓN 1
+                            limpiarPantalla();
+                            calcularYMostrarCoeficienteFriccionCuerpoEnMovimientoEcuacion1PH();
+                            break;
+                        case 2: // SE CALCULA EL COEFICIENTE DE FRICCIÓN CON LA ECUACIÓN 2
+                            limpiarPantalla();
+                            calcularYMostrarCoeficienteFriccionCuerpoEnMovimientoEcuacion2PH();
+                            break;
+                        case 3: // VOLVER AL MENÚ ANTERIOR
+                            limpiarPantalla();
+                            break;
+                        case 4: // SALIR DEL PROGRAMA
+                            cout << "Saliendo del programa...\n";
+                            exit(0);
+                            break;
+                        default: // MENSAJE DE ERROR POR DEFECTO
+                            limpiarPantalla();
+                            cout << "Error: inserte una opcion del 1 al 4\n";
+                            break;
+                    }
+                } while (Ecuacion != 3);
+                break;
+            case 8: // VOLVER AL MENÚ ANTERIOR
+                limpiarPantalla();
+                break;
+            case 9: // SALIR DEL PROGRAMA
+                cout << "Saliendo del programa...\n";
+                exit(0);
+            default: // MENSAJE DE ERROR POR DEFECTO
+                limpiarPantalla();
+                cout << "Error: inserte una opcion del 1 al 9\n";
+                break;
+        }
+    } while (opcion != 8);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // PROBLEMAS EN PLANO INCLINADO
 void planoInclinado() {

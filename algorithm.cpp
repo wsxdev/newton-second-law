@@ -552,9 +552,11 @@ void menuPlanoHorizontal() {
 
         switch (opcion) {
             case 1: // MUESTRA EL MENÚ DEL CUERPO EN REPOSO - PLANO HORIZONTAL
+                limpiarPantalla();
                 menuCuerpoEnReposoPlanoHorizontal();
                 break;
             case 2: // MUESTRA EL MENÚ DEL CUERPO EN MOVIMIENTO - PLANO HORIZONTAL
+                limpiarPantalla();
                 menuCuerpoEnMovimientoPlanoHorizontal();
                 break;
             case 3: // VOLVER AL MENÚ PRINCIPAL
@@ -587,12 +589,15 @@ void menuCuerpoEnReposoPlanoHorizontal() {
 
         switch (opcion) {
             case 1: // CALCULA Y MUESTRA EL PESO DE UN CUERPO EN REPOSO - PLANO HORIZONTAL
+                limpiarPantalla();
                 calcularYMostrarPeso();
                 break;
             case 2: // CALCULA Y MUESTRA LA MASA DE UN CUERPO EN REPOSO - PLANO HORIZONTAL
+                limpiarPantalla();
                 calcularYMostrarMasaCuerpoEnReposoPH();
                 break;
             case 3: // CALCULA Y MUESTRA LA FUERZA NORMAL DE UN CUERPO EN REPOSO - PLANO HORIZONTAL
+                limpiarPantalla();
                 calcularYMostrarFuerzaNormalCuerpoEnReposoPH();
                 break;
             case 4: // VOLVER AL MENÚ ANTERIOR

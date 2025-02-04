@@ -860,11 +860,6 @@ double calcularAceleracion(double anguloRadianes, double coeficienteFriccion) {
     return GRAVEDAD * (sin(anguloRadianes) - coeficienteFriccion * cos(anguloRadianes));
 }
 
-/* // Función para calcular el peso
-double calcularPeso(double masa) {
-    return masa * GRAVEDAD;
-} */
-
 // Función para calcular el peso en X
 double calcularPesoX(double peso, double anguloRadianes) {
     return peso * sin(anguloRadianes);
@@ -957,24 +952,6 @@ void calcularYMostrarAceleracion() {
     cout << "La aceleracion es: " << aceleracion << " m/s^2\n";
     presionarEnterParaContinuar();
 }
-
-/* // Función para calcular y mostrar el peso
-void calcularYMostrarPeso() {
-    double masa;
-
-    cout << "CALCULANDO EL PESO\n\n";
-    cout << "Ingrese la masa (kg): ";
-    masa = leerNumero();
-
-    double peso = calcularPeso(masa);
-
-    cout << "\nDatos ingresados:\n";
-    cout << "Masa: " << masa << " kg\n";
-
-    cout << "\nRESULTADO\n";
-    cout << "El peso es: " << peso << " N\n";
-    presionarEnterParaContinuar();
-} */
 
 // Función para calcular y mostrar el peso en X
 void calcularYMostrarPesoX() {

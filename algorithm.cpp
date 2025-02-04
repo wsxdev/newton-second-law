@@ -223,11 +223,15 @@ void calcularYMostrarFuerzaCuerpoEnMovimientoPH() {
         aceleracion = leerNumero();
     } while (!validarMayorCero(aceleracion, "aceleracion"));
 
-    // SOLICITAR Y VALIDAR EL COEFICIENTE DE FRICCION
+    // SOLICITAR Y VALIDAR EL COEFICIENTE DE FRICCIÓN
     do {
-        cout << "Ingrese el coeficiente de friccion: ";
+        cout << "Ingrese el coeficiente de friccion, entre [0 y 1]: ";
         coeficienteFriccion = leerNumero();
-    } while (!validarMayorCero(coeficienteFriccion, "coeficiente de friccion"));
+        if (coeficienteFriccion <= 0 || coeficienteFriccion > 1) {
+            limpiarPantalla();
+            cout << "El coeficiente de friccion debe estar entre 0 y 1\n\n";
+        }
+    } while (coeficienteFriccion <= 0 || coeficienteFriccion > 1);
 
     // CALCULAR LA FUERZA
     double fuerza = masa * (aceleracion + coeficienteFriccion * GRAVEDAD);
@@ -276,6 +280,10 @@ void calcularYMostrarMasaCuerpoEnMovimientoEcuacion1PH() {
     // SOLICITAR Y VALIDAR LA FUERZA
     do {
         cout << "CALCULANDO LA MASA\n\n";
+        cout << "Ecuación seleccionada:\n\n";
+        cout << "          F\n";
+        cout << "1. m = --------\n";
+        cout << "        a + ug\n\n";
         cout << "Ingrese la fuerza (N): ";
         fuerza = leerNumero();
     } while (!validarMayorCero(fuerza, "fuerza"));
@@ -310,13 +318,16 @@ void calcularYMostrarMasaCuerpoEnMovimientoEcuacion1PH() {
     presionarEnterParaContinuar();
 }
 
-// Calcular la MASA usando la ECUACIÓN del cuerpo en reposo
+// Calcular la MASA usando la ECUACIÓN del cuerpo en REPOSO
 void calcularYMostrarMasaCuerpoEnMovimientoEcuacion2PH() {
     double peso;
 
     // SOLICITAR Y VALIDAR EL PESO
     do {
         cout << "CALCULANDO LA MASA\n\n";
+        cout << "           W\n";
+        cout << "2. m = --------\n";
+        cout << "           g\n\n";
         cout << "Ingrese el peso (N): ";
         peso = leerNumero();
     } while (!validarMayorCero(peso, "peso"));
@@ -346,9 +357,13 @@ void calcularYMostrarAceleracionCuerpoEnMovimientoPH() {
 
     // SOLICITAR Y VALIDAR EL COEFICIENTE DE FRICCIÓN
     do {
-        cout << "Ingrese el coeficiente de friccion: ";
+        cout << "Ingrese el coeficiente de friccion, entre [0 y 1]: ";
         coeficienteFriccion = leerNumero();
-    } while (!validarMayorCero(coeficienteFriccion, "coeficiente de friccion"));
+        if (coeficienteFriccion <= 0 || coeficienteFriccion > 1) {
+            limpiarPantalla();
+            cout << "El coeficiente de friccion debe estar entre 0 y 1\n\n";
+        }
+    } while (coeficienteFriccion <= 0 || coeficienteFriccion > 1);
 
     // SOLICITAR Y VALIDAR MASA
     do {
@@ -377,9 +392,15 @@ void calcularYMostrarFuerzaRozamientoCuerpoEnMovimientoEcuacion1PH() {
     // SOLICITAR Y VALIDAR EL COEFICIENTE DE FRICCIÓN
     do {
         cout << "CALCULANDO LA FUERZA DE ROZAMIENTO\n\n";
-        cout << "Ingrese el coeficiente de friccion: ";
+        cout << "Ecuacion seleccionada:\n";
+        cout << "1. Fr = uN\n\n";
+        cout << "Ingrese el coeficiente de friccion, entre [0 y 1]: ";
         coeficienteFriccion = leerNumero();
-    } while (!validarMayorCero(coeficienteFriccion, "coeficiente de friccion"));
+        if (coeficienteFriccion <= 0 || coeficienteFriccion > 1) {
+            limpiarPantalla();
+            cout << "El coeficiente de friccion debe estar entre 0 y 1\n\n";
+        }
+    } while (coeficienteFriccion <= 0 || coeficienteFriccion > 1);
 
     // SOLICITAR Y VALIDAR LA FUERZA NORMAL
     do {
@@ -400,13 +421,15 @@ void calcularYMostrarFuerzaRozamientoCuerpoEnMovimientoEcuacion1PH() {
     presionarEnterParaContinuar();
 }
 
-// Calcular la FUERZA DE ROZAMIENTO usando la ecuación 2 (Fr = F - ma) - PLANO HORIZONTAL
+// Calcular la FUERZA DE ROZAMIENTO usando la ECUACIÓN 2 (Fr = F - ma) - PLANO HORIZONTAL
 void calcularYMostrarFuerzaRozamientoCuerpoEnMovimientoEcuacion2PH() {
     double fuerza, masa, aceleracion;
 
     // SOLICITAR Y VALIDAR LA FUERZA
     do {
         cout << "CALCULANDO LA FUERZA DE ROZAMIENTO\n\n";
+        cout << "Ecuacion seleccionada:\n";
+        cout << "2. Fr = F - ma\n";
         cout << "Ingrese la fuerza (N): ";
         fuerza = leerNumero();
     } while (!validarMayorCero(fuerza, "fuerza"));
@@ -437,7 +460,7 @@ void calcularYMostrarFuerzaRozamientoCuerpoEnMovimientoEcuacion2PH() {
     presionarEnterParaContinuar();
 }
 
-// Función para calcular el coeficiente de fricción usando la ecuación 1 (u = Fr / N)
+// Función para calcular COEFICIENTE DE FRICCIÓN usando la ECUACIÓN 1 (u = Fr / N)
 void calcularYMostrarCoeficienteFriccionCuerpoEnMovimientoEcuacion1PH() {
     double fuerzaRozamiento, fuerzaNormal;
 
@@ -467,7 +490,7 @@ void calcularYMostrarCoeficienteFriccionCuerpoEnMovimientoEcuacion1PH() {
     presionarEnterParaContinuar();
 }
 
-// Función para calcular el coeficiente de fricción usando la ecuación 2 (u = (F - ma) / (mg))
+// Función para calcular el COEFICIENTE DE FRICCIÓN usando la ECUACIÓN 2 (u = (F - ma) / (mg))
 void calcularYMostrarCoeficienteFriccionCuerpoEnMovimientoEcuacion2PH() {
     double fuerza, masa, aceleracion;
 
@@ -504,7 +527,7 @@ void calcularYMostrarCoeficienteFriccionCuerpoEnMovimientoEcuacion2PH() {
     presionarEnterParaContinuar();
 }
 
-// MENÚS
+// MENÚS //
 // MENÚ PRINCIPAL DEL PROGRAMA
 void menuPrincipal() {
     do {
@@ -537,7 +560,7 @@ void menuPrincipal() {
     } while (Opcion != 4);
 }
 
-// Menú plano horizontal
+// MENÚ PLANO HORIZONTAL
 void menuPlanoHorizontal() {
     limpiarPantalla();
     int opcion;
@@ -573,7 +596,7 @@ void menuPlanoHorizontal() {
     } while (opcion != 3);
 }
 
-// Menú para cuerpo en reposo
+// Menú para el CUERPO EN REPOSO
 void menuCuerpoEnReposoPlanoHorizontal() {
     int opcion;
     do {
@@ -614,7 +637,7 @@ void menuCuerpoEnReposoPlanoHorizontal() {
     } while (opcion != 4);
 }
 
-// Menú para cuerpo en movimiento
+// Menú para el CUERPO EN MOVIMIENTO
 void menuCuerpoEnMovimientoPlanoHorizontal() {
     int opcion;
     do {
@@ -669,13 +692,11 @@ void menuCuerpoEnMovimientoPlanoHorizontal() {
                         case 1:
                             limpiarPantalla();
                             calcularYMostrarMasaCuerpoEnMovimientoEcuacion1PH();
-                            presionarEnterParaContinuar();
                             break;
                         // SE CALCULA LA MASA CON LA ECUACIÓN 2
                         case 2:
                             limpiarPantalla();
                             calcularYMostrarMasaCuerpoEnMovimientoEcuacion2PH();
-                            presionarEnterParaContinuar();
                             break;
                         // VOLVER AL MENÚ PRINCIPAL
                         case 3:

@@ -840,11 +840,331 @@ void menuCuerpoEnMovimientoPlanoHorizontal() {
 
 
 
+// Función para convertir grados a radianes
+double convertirARadianes(double anguloGrados) {
+    return anguloGrados * M_PI / 180;
+}
+
+// Función para calcular la fuerza normal
+double calcularFuerzaNormal(double masa, double anguloRadianes) {
+    return masa * GRAVEDAD * cos(anguloRadianes);
+}
+
+// Función para calcular la masa
+double calcularMasa(double peso) {
+    return peso / GRAVEDAD;
+}
+
+// Función para calcular la aceleración
+double calcularAceleracion(double anguloRadianes, double coeficienteFriccion) {
+    return GRAVEDAD * (sin(anguloRadianes) - coeficienteFriccion * cos(anguloRadianes));
+}
+
+/* // Función para calcular el peso
+double calcularPeso(double masa) {
+    return masa * GRAVEDAD;
+} */
+
+// Función para calcular el peso en X
+double calcularPesoX(double peso, double anguloRadianes) {
+    return peso * sin(anguloRadianes);
+}
+
+// Función para calcular el peso en Y
+double calcularPesoY(double peso, double anguloRadianes) {
+    return peso * cos(anguloRadianes);
+}
+
+// Función para calcular la fuerza de rozamiento (Fr = uN)
+double calcularFuerzaRozamientoEcuacion1(double coeficienteFriccion, double fuerzaNormal) {
+    return coeficienteFriccion * fuerzaNormal;
+}
+
+// Función para calcular la fuerza de rozamiento (Fr = m(gsin(x) - a))
+double calcularFuerzaRozamientoEcuacion2(double masa, double anguloRadianes, double aceleracion) {
+    return masa * ((GRAVEDAD * sin(anguloRadianes)) - aceleracion);
+}
+
+// Función para calcular el coeficiente de fricción (u = Fr / N)
+double calcularCoeficienteFriccionEcuacion1(double fuerzaRozamiento, double fuerzaNormal) {
+    return fuerzaRozamiento / fuerzaNormal;
+}
+
+// Función para calcular el coeficiente de fricción (u = (gsin(x) - a) / (gcos(x)))
+double calcularCoeficienteFriccionEcuacion2(double anguloRadianes, double aceleracion) {
+    return (GRAVEDAD * sin(anguloRadianes) - aceleracion) / (GRAVEDAD * cos(anguloRadianes));
+}
+
+
+// Función para calcular y mostrar la fuerza normal
+void calcularYMostrarFuerzaNormal() {
+    double masa, anguloGrados;
+
+    cout << "CALCULANDO LA FUERZA NORMAL\n\n";
+    cout << "Ingrese la masa (kg): ";
+    masa = leerNumero();
+    cout << "Ingrese el angulo de inclinacion (grados): ";
+    anguloGrados = leerNumero();
+
+    double anguloRadianes = convertirARadianes(anguloGrados);
+    double fuerzaNormal = calcularFuerzaNormal(masa, anguloRadianes);
+
+    cout << "\nDatos ingresados:\n";
+    cout << "Masa: " << masa << " kg\n";
+    cout << "Angulo: " << anguloRadianes << " rad\n";
+
+    cout << "\nRESULTADO\n";
+    cout << "La fuerza normal es: " << fuerzaNormal << " N\n";
+    presionarEnterParaContinuar();
+}
+
+// Función para calcular y mostrar la masa
+void calcularYMostrarMasa() {
+    double peso;
+
+    cout << "CALCULANDO LA MASA\n\n";
+    cout << "Ingrese el peso (N): ";
+    peso = leerNumero();
+
+    double masa = calcularMasa(peso);
+
+    cout << "\nDatos ingresados:\n";
+    cout << "Peso: " << peso << " N\n";
+
+    cout << "\nRESULTADO\n";
+    cout << "La masa es: " << masa << " kg\n";
+    presionarEnterParaContinuar();
+}
+
+// Función para calcular y mostrar la aceleración
+void calcularYMostrarAceleracion() {
+    double coeficienteFriccion, anguloGrados;
+
+    cout << "CALCULANDO LA ACELERACION\n\n";
+    cout << "Ingrese el coeficiente de friccion: ";
+    coeficienteFriccion = leerNumero();
+    cout << "Ingrese el angulo de inclinacion (grados): ";
+    anguloGrados = leerNumero();
+
+    double anguloRadianes = convertirARadianes(anguloGrados);
+    double aceleracion = calcularAceleracion(anguloRadianes, coeficienteFriccion);
+
+    cout << "\nDatos ingresados:\n";
+    cout << "Coeficiente de friccion: " << coeficienteFriccion << endl;
+    cout << "Angulo: " << anguloRadianes << " rad\n";
+
+    cout << "\nRESULTADO\n";
+    cout << "La aceleracion es: " << aceleracion << " m/s^2\n";
+    presionarEnterParaContinuar();
+}
+
+/* // Función para calcular y mostrar el peso
+void calcularYMostrarPeso() {
+    double masa;
+
+    cout << "CALCULANDO EL PESO\n\n";
+    cout << "Ingrese la masa (kg): ";
+    masa = leerNumero();
+
+    double peso = calcularPeso(masa);
+
+    cout << "\nDatos ingresados:\n";
+    cout << "Masa: " << masa << " kg\n";
+
+    cout << "\nRESULTADO\n";
+    cout << "El peso es: " << peso << " N\n";
+    presionarEnterParaContinuar();
+} */
+
+// Función para calcular y mostrar el peso en X
+void calcularYMostrarPesoX() {
+    double peso, anguloGrados;
+
+    cout << "CALCULANDO EL PESO EN X\n\n";
+    cout << "Ingrese el peso (N): ";
+    peso = leerNumero();
+    cout << "Ingrese el angulo de inclinacion (grados): ";
+    anguloGrados = leerNumero();
+
+    double anguloRadianes = convertirARadianes(anguloGrados);
+    double pesoX = calcularPesoX(peso, anguloRadianes);
+
+    cout << "\nDatos ingresados:\n";
+    cout << "Peso: " << peso << " N\n";
+    cout << "Angulo: " << anguloRadianes << " rad\n";
+
+    cout << "\nRESULTADO\n";
+    cout << "El peso en X es: " << pesoX << " N\n";
+    presionarEnterParaContinuar();
+}
+
+// Función para calcular y mostrar el peso en Y
+void calcularYMostrarPesoY() {
+    double peso, anguloGrados;
+
+    cout << "CALCULANDO EL PESO EN Y\n\n";
+    cout << "Ingrese el peso (N): ";
+    peso = leerNumero();
+    cout << "Ingrese el angulo de inclinacion (grados): ";
+    anguloGrados = leerNumero();
+
+    double anguloRadianes = convertirARadianes(anguloGrados);
+    double pesoY = calcularPesoY(peso, anguloRadianes);
+
+    cout << "\nDatos ingresados:\n";
+    cout << "Peso: " << peso << " N\n";
+    cout << "Angulo: " << anguloRadianes << " rad\n";
+
+    cout << "\nRESULTADO\n";
+    cout << "El peso en Y es: " << pesoY << " N\n";
+    presionarEnterParaContinuar();
+}
+
+// Función para calcular y mostrar la fuerza de rozamiento
+void calcularYMostrarFuerzaRozamiento() {
+    int ecuacion;
+    cout << "CALCULANDO LA FUERZA DE ROZAMIENTO\n\n";
+    cout << "Seleccione la ecuacion a utilizar segun los datos que disponga\n";
+    cout << "1. Fr = uN\n";
+    cout << "2. Fr = m(gsin(x) - a)\n\n";
+    cout << "Donde: \n";
+    cout << "Fr: fuerza de rozamiento (N)\n";
+    cout << "u: coeficiente de friccion\n";
+    cout << "N: fuerza normal (N)\n";
+    cout << "m: masa (kg)\n";
+    cout << "g: gravedad (m/s^2)\n";
+    cout << "x: angulo (grados)\n";
+    cout << "a: aceleracion (m/s^2)\n\n";
+    cout << "Seleccione la ecuacion: ";
+    ecuacion = leerOpcion();
+
+    switch (ecuacion) {
+        case 1: {
+            double coeficienteFriccion, fuerzaNormal;
+
+            cout << "CALCULANDO LA FUERZA DE ROZAMIENTO\n\n";
+            cout << "Ingrese el coeficiente de friccion: ";
+            coeficienteFriccion = leerNumero();
+            cout << "Ingrese la fuerza normal (N): ";
+            fuerzaNormal = leerNumero();
+
+            double fuerzaRozamiento = calcularFuerzaRozamientoEcuacion1(coeficienteFriccion, fuerzaNormal);
+
+            cout << "\nDatos ingresados:\n";
+            cout << "Coeficiente de friccion: " << coeficienteFriccion << endl;
+            cout << "Fuerza normal: " << fuerzaNormal << " N\n";
+
+            cout << "\nRESULTADO\n";
+            cout << "La fuerza de rozamiento es: " << fuerzaRozamiento << " N\n";
+            presionarEnterParaContinuar();
+            break;
+        }
+        case 2: {
+            double masa, anguloGrados, aceleracion;
+
+            cout << "CALCULANDO LA FUERZA DE ROZAMIENTO\n\n";
+            cout << "Ingrese la masa (kg): ";
+            masa = leerNumero();
+            cout << "Ingrese el angulo de inclinacion (grados): ";
+            anguloGrados = leerNumero();
+            cout << "Ingrese la aceleracion (m/s^2): ";
+            aceleracion = leerNumero();
+
+            double anguloRadianes = convertirARadianes(anguloGrados);
+            double fuerzaRozamiento = calcularFuerzaRozamientoEcuacion2(masa, anguloRadianes, aceleracion);
+
+            cout << "\nDatos ingresados:\n";
+            cout << "Masa: " << masa << " kg\n";
+            cout << "Angulo: " << anguloRadianes << " rad\n";
+            cout << "Aceleracion: " << aceleracion << " m/s^2\n";
+
+            cout << "\nRESULTADO\n";
+            cout << "La fuerza de rozamiento es: " << fuerzaRozamiento << " N\n";
+            presionarEnterParaContinuar();
+            break;
+        }
+        default:
+            cout << "Opción no válida.\n";
+            break;
+    }
+}
+
+// Función para calcular y mostrar el coeficiente de fricción
+void calcularYMostrarCoeficienteFriccion() {
+    int ecuacion;
+    cout << "CALCULANDO EL COEFICIENTE DE FRICCION\n\n";
+    cout << "Seleccione la ecuacion a utilizar segun los datos que disponga\n";
+    cout << "          Fr\n";
+    cout << "1. u = --------\n";
+    cout << "          N\n\n";
+    cout << "        gsin(x) - a\n";
+    cout << "2. u = -------------\n";
+    cout << "          gcos(x)\n\n";
+    cout << "Donde: \n";
+    cout << "u: coeficiente de friccion\n";
+    cout << "Fr: fuerza de rozamiento (N)\n";
+    cout << "N: fuerza normal (N)\n";
+    cout << "g: gravedad (m/s^2)\n";
+    cout << "x: angulo\n";
+    cout << "a: aceleracion (m/s^2)\n\n";
+    cout << "Seleccione la ecuacion: ";
+    ecuacion = leerOpcion();
+
+    switch (ecuacion) {
+        case 1: {
+            double fuerzaRozamiento, fuerzaNormal;
+
+            cout << "CALCULANDO EL COEFICIENTE DE FRICCION\n\n";
+            cout << "Ingrese la fuerza de rozamiento (N): ";
+            fuerzaRozamiento = leerNumero();
+            cout << "Ingrese la fuerza normal (N): ";
+            fuerzaNormal = leerNumero();
+
+            double coeficienteFriccion = calcularCoeficienteFriccionEcuacion1(fuerzaRozamiento, fuerzaNormal);
+
+            cout << "\nDatos ingresados:\n";
+            cout << "Fuerza de rozamiento: " << fuerzaRozamiento << " N\n";
+            cout << "Fuerza normal: " << fuerzaNormal << " N\n";
+
+            cout << "\nRESULTADO\n";
+            cout << "El coeficiente de friccion es: " << coeficienteFriccion << endl;
+            presionarEnterParaContinuar();
+            break;
+        }
+        case 2: {
+            double anguloGrados, aceleracion;
+
+            cout << "CALCULANDO EL COEFICIENTE DE FRICCION\n\n";
+            cout << "Ingrese el angulo de inclinacion (grados): ";
+            anguloGrados = leerNumero();
+            cout << "Ingrese la aceleracion (m/s^2): ";
+            aceleracion = leerNumero();
+
+            double anguloRadianes = convertirARadianes(anguloGrados);
+            double coeficienteFriccion = calcularCoeficienteFriccionEcuacion2(anguloRadianes, aceleracion);
+
+            cout << "\nDatos ingresados:\n";
+            cout << "Angulo: " << anguloRadianes << " rad\n";
+            cout << "Aceleracion: " << aceleracion << " m/s^2\n";
+
+            cout << "\nRESULTADO\n";
+            cout << "El coeficiente de friccion es: " << coeficienteFriccion << endl;
+            presionarEnterParaContinuar();
+            break;
+        }
+        default:
+            cout << "Opción no válida.\n";
+            break;
+    }
+}
+
+
+
 
 // PROBLEMAS EN PLANO INCLINADO
 void planoInclinado() {
     limpiarPantalla();
-    double Angulo = 0, Masa = 0, Peso = 0, PesoX = 0, PesoY = 0, Fuerza_Normal = 0, Fuerza_Rozamiento = 0, Coef_Friccion = 0, Aceleracion = 0;
+    int opcion;
 
     do {
         cout << "\n======== PLANO INCLINADO ========\n";
@@ -860,252 +1180,44 @@ void planoInclinado() {
         cout << "9. Volver\n";
         cout << "10. Salir\n";
         cout << "\nSeleccione lo que desea calcular: ";
-        Opcion = leerOpcion();
+        opcion = leerOpcion();
 
-        switch (Opcion) {
-            // CÁLCULO DE LA FUERZA NORMAL
+        switch (opcion) {
             case 1:
                 limpiarPantalla();
-                cout << "CALCULANDO LA FUERZA NORMAL\n\n";
-                cout << "Ingrese la masa (kg): ";
-                cin >> Masa;
-                cout << "Ingrese el angulo de inclinacion (grados): ";
-                cin >> Angulo;
-                Angulo *= M_PI / 180;  // CONVERTIR A RADIANES
-                
-                Fuerza_Normal = Masa * GRAVEDAD * cos(Angulo);
-                
-                cout << "\nDatos ingresados:\n";
-                cout << "Masa: " << Masa << " kg\n";
-                cout << "Angulo: " << Angulo << " rad\n";
-
-                cout << "\nRESULTADO\n";
-                cout << "La fuerza normal es: " << Fuerza_Normal << " N\n";
-                presionarEnterParaContinuar();
+                calcularYMostrarFuerzaNormal();
                 break;
-            // CÁLCULO DE LA MASA
             case 2:
                 limpiarPantalla();
-                cout << "CALCULANDO LA MASA\n\n";
-                cout << "Ingrese el peso (N): ";
-                cin >> Peso;
-                
-                Masa = Peso / GRAVEDAD;
-
-                cout << "\nDatos ingresados:\n";
-                cout << "Peso: " << Peso << " N\n\n";
-
-                cout << "RESULTADO\n";
-                cout << "La masa es: " << Masa << " kg\n";
-                presionarEnterParaContinuar();
+                calcularYMostrarMasa();
                 break;
-            // CÁLCULO DE LA ACELERACIÓN
             case 3:
                 limpiarPantalla();
-                cout << "CALCULANDO LA ACELERACION\n\n";
-                cout << "Ingrese el coeficiente de friccion: ";
-                cin >> Coef_Friccion;
-                cout << "Ingrese el angulo de inclinacion (grados): ";
-                cin >> Angulo;
-
-                Angulo *= M_PI / 180; // CONVERTIR A RADIANES
-                Aceleracion = GRAVEDAD * (sin(Angulo) - Coef_Friccion * cos(Angulo));
-
-                cout << "\nDatos ingresados:\n";
-                cout << "Coeficiente de friccion: " << Coef_Friccion << endl;
-                cout << "Angulo: " << Angulo << " rad\n";
-
-                cout << "\nRESULTADO\n";
-                cout << "La acelaracion es: " << Aceleracion << " m/s^2\n";
-                presionarEnterParaContinuar();
+                calcularYMostrarAceleracion();
                 break;
-            // CÁLCULO DEL PESO
             case 4:
                 limpiarPantalla();
-                cout << "CALCULANDO EL PESO\n\n";
-                cout << "Ingrese la masa (kg): ";
-                cin >> Masa;
-                
-                Peso = Masa * GRAVEDAD;
-
-                cout << "\nDatos ingresados:\n";
-                cout << "Masa: " << Masa << " kg\n";
-
-                cout << "\nRESULTADO\n";
-                cout << "El peso es: " << Peso << " N\n";
-                presionarEnterParaContinuar();
+                calcularYMostrarPeso();
                 break;
-            // CÁLCULO DEL PESO EN X
             case 5:
                 limpiarPantalla();
-                cout << "CALCULANDO EL PESO EN X\n\n";
-                cout << "Ingrese el peso (N): ";
-                cin >> Peso;
-                cout << "Ingrese el angulo de inclinacion (grados): ";
-                cin >> Angulo;
-
-                Angulo *= M_PI / 180;  // CONVERTIR A RADIANES
-                PesoX = Peso * sin(Angulo);
-
-                cout << "\nDatos ingresados:\n";
-                cout << "Peso: " << Peso << " N\n";
-                cout << "Angulo: " << Angulo << " rad\n";
-
-                cout << "\nRESULTADO\n";
-                cout << "El peso en X es: " << PesoX << " N\n";
-                presionarEnterParaContinuar();
+                calcularYMostrarPesoX();
                 break;
-            // CÁLCULO DEL PESO EN Y
             case 6:
                 limpiarPantalla();
-                cout << "CALCULANDO EL PESO EN X\n\n";
-                cout << "Ingrese el peso (N): ";
-                cin >> Peso;
-                cout << "Ingrese el angulo de inclinacion (grados): ";
-                cin >> Angulo;
-
-                Angulo *= M_PI / 180;  // CONVERTIR A RADIANES
-                PesoY = Peso * cos(Angulo);
-
-                cout << "\nDatos ingresados:\n";
-                cout << "Peso: " << Peso << " N\n";
-                cout << "Angulo: " << Angulo << " rad\n";
-
-                cout << "\nRESULTADO\n";
-                cout << "El peso en Y es: " << PesoY << " N\n";
-                presionarEnterParaContinuar();
+                calcularYMostrarPesoY();
                 break;
-            // CÁLCULO DE LA FUERZA DE FRICCIÓN
             case 7:
                 limpiarPantalla();
-                cout << "CALCULANDO LA FUERZA DE ROZAMIENTO\n\n";
-                cout << "Seleccione la ecuacion a utilizar segun los datos que disponga\n";
-                cout << "1. Fr = uN\n";
-                cout << "2. Fr = m(gsin(x) - a)\n\n";
-                cout << "Donde: \n";
-                cout << "Fr: fuerza de rozamiento (N)\n";
-                cout << "u: coeficiente de friccion\n";
-                cout << "N: fuerza normal (N)\n";
-                cout << "m: masa (kg)\n";
-                cout << "g: gravedad (m/s^2)\n";
-                cout << "x: angulo (grados)\n";
-                cout << "a: aceleracion (m/s^2)\n\n";
-                cout << "Seleccione la ecuacion: ";
-                cin >> Ecuacion;
-
-                if(Ecuacion == 1){
-                    limpiarPantalla();
-                    cout << "CALCULANDO LA FUERZA DE ROZAMIENTO\n\n";
-                    cout << "Ingrese el coeficiente de friccion: ";
-                    cin >> Coef_Friccion;
-                    cout << "Ingrese la fuerza normal (N): ";
-                    cin >> Fuerza_Normal;
-
-                    Fuerza_Rozamiento = Coef_Friccion * Fuerza_Normal;
-
-                    cout << "\nDatos ingresados:\n";
-                    cout << "Coeficiente de friccion: " << Coef_Friccion << endl;
-                    cout << "Fuerza normal: " << Fuerza_Normal << " N\n";
-
-                    cout << "\nRESULTADO\n";
-                    cout << "La fuerza de rozamiento es: " << Fuerza_Rozamiento << " N\n";
-                    presionarEnterParaContinuar();
-                } else if(Ecuacion == 2){
-                    limpiarPantalla();
-                    cout << "CALCULANDO LA FUERZA DE ROZAMIENTO\n\n";
-                    cout << "Ingrese la masa (kg): ";
-                    cin >> Masa;
-                    cout << "Ingrese el angulo de inclinacion (grados): ";
-                    cin >> Angulo;
-                    cout << "Ingrese la aceleracion (m/s^2): ";
-                    cin >> Aceleracion;
-
-                    Angulo *= M_PI / 180;  // CONVERTIR A RADIANES
-                    Fuerza_Rozamiento = Masa * ((GRAVEDAD * sin(Angulo)) - Aceleracion);
-
-                    cout << "\nDatos ingresados:\n";
-                    cout << "Masa: " << Masa << " kg\n";
-                    cout << "Angulo: " << Angulo << " rad\n";
-                    cout << "Aceleracion: " << Aceleracion << " m/s^2\n";
-
-                    cout << "\nRESULTADO\n";
-                    cout << "La fuerza de rozamiento es: " << Fuerza_Rozamiento << " N\n";
-                    presionarEnterParaContinuar();
-                } else {
-                    cout << "Opcion no valida\n";
-                }
-
+                calcularYMostrarFuerzaRozamiento();
                 break;
-            // CÁLCULO DEL COEFICIENTE DE FRICCIÓN
             case 8:
                 limpiarPantalla();
-                cout << "CALCULANDO EL COEFICIENTE DE FRICCION\n\n";
-                cout << "Seleccione la ecuacion a utilizar segun los datos que disponga\n";
-                cout << "          Fr\n";
-                cout << "1. u = --------\n";
-                cout << "          N\n\n";
-                cout << "        gsin(x) - a\n";
-                cout << "2. u = -------------\n";
-                cout << "          gcos(x)\n\n";
-                cout << "Donde: \n";
-                cout << "u: coeficiente de friccion\n";
-                cout << "Fr: fuerza de rozamiento (N)\n";
-                cout << "N: fuerza normal (N)\n";
-                cout << "g: gravedad (m/s^2)\n";
-                cout << "x: angulo\n";
-                cout << "a: aceleracion (m/s^2)\n\n";
-                cout << "Seleccione la ecuacion: ";
-                cin >> Ecuacion;
-                if (Ecuacion == 1){
-                    limpiarPantalla();
-                    cout << "CALCULANDO EL COEFICIENTE DE FRICCION\n\n";
-                    cout << "Ecuacion seleccionada:\n";
-                    cout << "          Fr\n";
-                    cout << "1. u = --------\n";
-                    cout << "          N\n\n";
-                    cout << "Ingrese la fuerza de rozamiento (N): ";
-                    cin >> Fuerza_Rozamiento;
-                    cout << "Ingrese la fuerza normal (N): ";
-                    cin >> Fuerza_Normal;
-
-                    Coef_Friccion = Fuerza_Rozamiento / Fuerza_Normal;
-
-                    cout << "\nDatos ingresados:\n";
-                    cout << "Fuerza de rozamiento: " << Fuerza_Rozamiento << " N\n";
-                    cout << "Fuerza normal: " << Fuerza_Normal << " N\n";
-
-                    cout << "\nRESULTADO\n";
-                    cout << "El coeficiente de friccion es: " << Coef_Friccion << endl;
-                    presionarEnterParaContinuar();
-                } else if (Ecuacion == 2){
-                    limpiarPantalla();
-                    cout << "CALCULANDO EL COEFICIENTE DE FRICCION\n\n";
-                    cout << "Ecuacion seleccionada:\n";
-                    cout << "        gsin(x) - a\n";
-                    cout << "2. u = -------------\n";
-                    cout << "          gcos(x)\n\n";
-                    cout << "Ingrese el angulo de inclinacion (grados): ";
-                    cin >> Angulo;
-                    cout << "Ingrese la aceleracion (m/s^2): ";
-                    cin >> Aceleracion;
-
-                    Angulo *= M_PI / 180;  // CONVERTIR A RADIANES
-                    Coef_Friccion = (GRAVEDAD * sin(Angulo) - Aceleracion) / (GRAVEDAD * cos(Angulo));
-
-                    cout << "\nDatos ingresados:\n";
-                    cout << "Angulo: " << Angulo << " rad\n";
-                    cout << "Aceleracion: " << Aceleracion << " m/s^2\n";
-
-                    cout << "\nRESULTADO\n";
-                    cout << "El coeficiente de friccion es: " << Coef_Friccion << endl;
-                    presionarEnterParaContinuar();
-                }
+                calcularYMostrarCoeficienteFriccion();
                 break;
-            // VOLVER AL MENÚ ANTERIOR
             case 9:
                 limpiarPantalla();
                 break;
-            // SALIR DEL PROGRAMA
             case 10:
                 cout << "Saliendo del programa...\n";
                 exit(0);
@@ -1115,8 +1227,21 @@ void planoInclinado() {
                 cout << "Error, inserte una opcion del 1 al 10\n";
                 break;
         }
-    } while (Opcion != 9);
+    } while (opcion != 9);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // MENÚ CONVERTIDOR DE UNIDADES
 void menuConvertidor() {
